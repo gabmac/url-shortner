@@ -106,10 +106,10 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 
 |ShortenedURL|
 |--------------|
-|original_url:str|
-|short_url:str|
-|created_at:datetime|
-|updated_at:datetime|
+|original_url: str|
+|short_url: str|
+|created_at: datetime|
+|updated_at: datetime|
 |status: StatusEnum|
 |statistics: Statistics|
 
