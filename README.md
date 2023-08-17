@@ -127,6 +127,18 @@ In this Entity we have all data that represents the Shortened Url
 
 ---
 
+### **Routes**
+
+|Endpoint|HTTP Verb|Action|
+|---|---|---|
+|/create|POST|Create a Short URL|
+|/{url_key}|GET|Fowards to target URL|
+|/admin/{url_key}|GET|Returns URL data and statistics|
+|/admin/{url_key}|PATCH|Update target URL|
+
+
+---
+
 ### Package Manager
 
 By default, the dependencies are managed with [Poetry](https://python-poetry.org/), go there and install it.
@@ -160,6 +172,7 @@ If you want to upgrade poetry you will need to run:
 $ poetry self update
 ```
 
+---
 
 ### Pre-Commit and Code Smells
 
@@ -259,8 +272,6 @@ you can run:
 ```bash
 $ docker compose up dynamodb-local
 ```
-
----
 
 #### Test Coverage
 
