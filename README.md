@@ -29,27 +29,27 @@ Using Gherkin for acceptance tests ensures that the tests are easily readable an
 ## **User Stories**
 
 1. **URL Lifetime**
-   - **As a** system administrator,
-     **I want** to create a short URLs to have an undefined lifetime,
-     **Because** I don't want them to expire automatically.
+    - **As a** system administrator,
+    - **I want** to create a short URLs to have an undefined lifetime,
+    - **Because** I don't want them to expire automatically.
 <br>
 
-2. **Real-time Statistics**
-   - **As a** marketer,
-     **I want** access to nearly real-time usage statistics,
-     **Because** I need to monitor the performance of my promotions.
+1. **Real-time Statistics**
+    - **As a** marketer,
+    - **I want** access to nearly real-time usage statistics,
+    - **Because** I need to monitor the performance of my promotions.
 <br>
 
-3. **URL Configuration**
+1. **URL Configuration**
    - **As a** system administrator,
-     **I want** to enable or disable published URLs,
-     **Because** I need control over the accessibility of my content.
+   - **I want** to enable or disable published URLs,
+   - **Because** I need control over the accessibility of my content.
    - **As a** system administrator,
-     **I want** to modify the destination URL,
-     **Because** the content I'm promoting might change.
+   - **I want** to modify the destination URL,
+   - **Because** the content I'm promoting might change.
 <br>
 
-4. **URL Redirect**
+1. **URL Redirect**
    - **As a** user,
    - **I want** to click on url and be redirect
    - **Because** I want to see the promotion on Twitter
