@@ -149,7 +149,7 @@ Then you can start a shell session with the new environment with:
 $ poetry shell
 ```
 
-From `./repository` you can update all the dependencies with:
+From `./<repository>` you can update all the dependencies with:
 
 ```bash
 $ poetry update
