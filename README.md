@@ -136,6 +136,58 @@ In this Entity we have all data that represents the Shortened Url
 |/admin/{url_key}|GET|Returns URL data and statistics|
 |/admin/{url_key}|PATCH|Update target URL|
 
+---
+
+### **Database Discussion**
+
+**CAP Theorem**
+
+In a distributed computer system, you can only support two of the following guarantees:
+
+ - **Consistency** - Every read receives the most recent write or an error
+ - **Availability** - Every request receives a response, without guarantee that it contains the most recent version of the information
+ - **Partition Tolerance** - The system continues to operate despite arbitrary partitioning due to network failures
+
+Networks aren't reliable, so you'll need to support partition tolerance. You'll need to make a software tradeoff between consistency and availability.
+
+CP - consistency and partition tolerance
+Waiting for a response from the partitioned node might result in a timeout error. CP is a good choice if your business needs require atomic reads and writes.
+
+AP - availability and partition tolerance
+Responses return the most readily available version of the data available on any node, which might not be the latest. Writes might take some time to propagate when the partition is resolved.
+
+AP is a good choice if the business needs to allow for eventual consistency or when the system needs to continue working despite external errors.
+
+**Reasons for SQL:**
+
+ - Structured data
+ - Strict schema
+ - Relational data
+ - Need for complex joins
+ - Transactions
+ - Clear patterns for scaling
+ - More established: developers, community, code, tools, etc
+ - Lookups by index are very fast
+
+**Reasons for NoSQL:**
+
+ - Semi-structured data
+ - Dynamic or flexible schema
+ - Non-relational data
+ - No need for complex joins
+ - Store many TB (or PB) of data
+ - Very data intensive workload
+ - Very high throughput for IOPS
+
+**Sample data well-suited for NoSQL:**
+
+ - Rapid ingest of clickstream and log data
+ - Leaderboard or scoring data
+ - Temporary data, such as a shopping cart
+ - Frequently accessed ('hot') tables
+ - Metadata/lookup tables
+
+Given that the application is going to receive about 10M RPM on peak, and it is a promotion i think the Availability is more important than consistent here, i see the application can relie in eventual consistent where after a write, reads will eventually see it (typically within milliseconds) and ata is replicated asynchronously. So i think that a NoSQL database is well-suited for the problem.
 
 ---
 
