@@ -137,7 +137,7 @@ $ curl -sSL https://install.python-poetry.org | python3 -
 ```
 **Note**: Pay Attention here! You may need to change the poetry path on `.bashrc`
 
-From `./exchange` you can install all the dependencies with:
+From `./<repository>` you can install all the dependencies with:
 
 ```bash
 $ poetry install
