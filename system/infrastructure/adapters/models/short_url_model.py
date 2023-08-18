@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pynamodb.attributes import UnicodeAttribute, UTCDateTimeAttribute
 
-from system.infrastructure.adapters.models import BaseModel
+from system.infrastructure.adapters.models.base_model import BaseModel
 
 
 class ShortUrlModel(BaseModel):
