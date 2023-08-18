@@ -3,11 +3,11 @@ from unittest import IsolatedAsyncioTestCase
 from system.infrastructure.adapters.models.base_model import BaseModel
 
 
-class BaseConftest(IsolatedAsyncioTestCase):
+class BaseConfTest(IsolatedAsyncioTestCase):
     pass
 
 
-class BaseRepositoryConfTest(BaseConftest):
+class BaseRepositoryConfTest(BaseConfTest):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
