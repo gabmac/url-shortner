@@ -10,6 +10,8 @@ packages = [{include = "url_shortner"}]
 python = "^3.10"
 pydantic = "^2.2.0"
 black = "^23.7.0"
+pynamodb = "^5.5.0"
+boto3 = "^1.28.29"
 
 
 [tool.poetry.group.code-smells.dependencies]
