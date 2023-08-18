@@ -4,7 +4,7 @@ from system.infrastructure.enums.environment_enum import Environments
 from system.infrastructure.settings.config import Config
 
 
-class NoSqlAdapter(Model):
+class BaseModel(Model):
     class Meta:
         table_name = Config.DATABASE.TABLE
         if Config.ENVIRONMENT == Environments.LOCAL.value:
