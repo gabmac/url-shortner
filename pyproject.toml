@@ -1,0 +1,71 @@
+[tool.poetry]
+name = "url-shortner"
+version = "0.1.0"
+description = "Url Shortner for Twitter Promotion Camapign"
+authors = ["Gabriel <gabrielbonanimachado@gmail.com>"]
+readme = "README.md"
+packages = [{include = "url_shortner"}]
+
+[tool.poetry.dependencies]
+python = "^3.10"
+
+
+[tool.poetry.group.code-smells.dependencies]
+flake8 = "^6.1.0"
+mypy = "^1.5.1"
+isort = "^5.12.0"
+pre-commit = "^3.3.3"
+autoflake = "^2.2.0"
+pylint = "^2.17.5"
+
+
+[tool.poetry.group.dev.dependencies]
+coverage = "^7.3.0"
+conventional-pre-commit = "^2.3.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.system.adapter_entrypoints.api"
+
+
+[tool.coverage.run]
+branch = true
+include = [
+    "system/adapter_entrypoints/api/routes/*",
+    "system/adapter_entrypoints/events/events_init.py",
+    "system/application/usecase/*",
+    "system/infrastructure/adapters/database/repositories/*",
+]
+omit = ["*__.py", "*exception*", "system/application/usecase/usecase.py"]
+[tool.coverage.report]
+fail_under = 80
+sort = "-Cover"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+src_paths = ["system",]
+
+[tool.mypy]
+install_types=true
+non_interactive=true
+disable_error_code = ["abstract"]
+exclude = "common|models"
+strict = true
+ignore_missing_imports = true
+allow_subclassing_any = true
+allow_untyped_calls = true
+pretty = true
+show_error_codes = true
+implicit_reexport = true
+allow_untyped_decorators = true
+warn_return_any = false
+warn_unused_ignores = false
+
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+    "ignore::pytest.PytestConfigWarning",
+    "ignore:.*unclosed.*:ResourceWarning",
+]

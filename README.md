@@ -199,7 +199,7 @@ For Container Image Repository we can use [ECR](https://aws.amazon.com/ecr/?nc1=
 
 #### Monitoring
 
-For Requests and log processing we can use ElasticSearch or AWS OpenSearch. We can add a logstash. Sending events to Logstash lets you decouple event processing from your app. Your app only needs to send events to Logstash and doesn’t need to know anything about what happens to the events afterwards. 
+For Requests and log processing we can use ElasticSearch or AWS OpenSearch. We can add a logstash. Sending events to Logstash lets you decouple event processing from your app. Your app only needs to send events to Logstash and doesn’t need to know anything about what happens to the events afterwards.
 Other option to logstash is Kinesis FireHose combined with OpenSearch, Kinesis will try to load data on OpenSearch if its fail it will write a document on S3 as contingency
 
 With we want to monitoring metrics as CPU and memory too besides logs, we can use DataDog or AWS CloudWatch.
