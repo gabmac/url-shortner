@@ -11,6 +11,7 @@ class BaseEntity(BaseModel):
         use_enum_values = True
         arbitrary_types_allowed = True
         validate_assignment = True
+        from_attributes = True
 
     def to_jsonable_dict(
         self,

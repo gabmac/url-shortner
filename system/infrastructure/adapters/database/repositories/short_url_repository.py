@@ -4,6 +4,7 @@ from system.domain.entities.url_entity import ShortenedUrlEntity
 from system.domain.ports.repositories.short_url_repository_port import (
     ShortUrlRepositoryPort,
 )
+from system.infrastructure.adapters.database.models.short_url_model import ShortUrlModel
 
 
 class ShortUrlRepository(ShortUrlRepositoryPort):
@@ -14,7 +15,11 @@ class ShortUrlRepository(ShortUrlRepositoryPort):
         """
         Method that Upserts Short Url data on database
         """
-        raise Exception(short_url_entity)
+        model = ShortUrlModel(**short_url_entity.to_jsonable_dict())
+
+        model.save()
+
+        return ShortenedUrlEntity.model_validate(short_url_entity)
 
     def select(
         self,
