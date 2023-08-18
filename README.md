@@ -102,7 +102,7 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 |short_url: str|
 |created_at: datetime|
 |updated_at: datetime|
-|status: StatusEnum|
+|status: ShortUrlStatusEnum|
 
 In this Entity we have all data that represents the Shortened Url
 

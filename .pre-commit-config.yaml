@@ -100,3 +100,4 @@ repos:
     pass_filenames: false
     args:
     - "system"
+    - --config=pyproject.toml
