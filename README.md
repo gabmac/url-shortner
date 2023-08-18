@@ -3,6 +3,12 @@
 ## **Introduction**
 The goal of this challenge is to build a URL shortener similar to platforms like [goo.gl](https://goo.gl/), [shorturl.at](https://www.shorturl.at/), or [bitly.com](https://bitly.com/). The primary use-case for this URL shortener is to facilitate the publishing of promotions on Twitter.
 
+
+## Constraints
+
+  1. 1M RPM peaks of traffic
+  2. 99.98% uptime
+
 ## **Acceptance Criteria**
 
 ### **Methodology**
@@ -34,12 +40,6 @@ Using Gherkin for acceptance tests ensures that the tests are easily readable an
     - **Because** I don't want them to expire automatically.
 <br>
 
-1. **Real-time Statistics**
-    - **As a** marketer,
-    - **I want** access to nearly real-time usage statistics,
-    - **Because** I need to monitor the performance of my promotions.
-<br>
-
 1. **URL Configuration**
    - **As a** system administrator,
    - **I want** to enable or disable published URLs,
@@ -65,14 +65,6 @@ Scenario: Creating a short URL
   Given I need to start a promotion on twitter
   When I give a twitter url
   Then a short url with undefined lifetime should be returned
-```
-
-### **Feature: Real-time Statistics**
-```gherkin
-Scenario: Accessing URL statistics
-  Given I have a published short URL
-  When I check its statistics
-  Then I should see nearly real-time usage data
 ```
 
 ### **Feature: URL Configuration**
@@ -111,19 +103,8 @@ In the challenge, we have a very well-defined objective, so we were able to iden
 |created_at: datetime|
 |updated_at: datetime|
 |status: StatusEnum|
-|statistics: Statistics|
 
 In this Entity we have all data that represents the Shortened Url
-
-
-### **Value Objects**
-- Objects that represent descriptive aspects of the domain with no conceptual identity. 
-- Defined by their attributes, does not have identity.
-- Usually, Value Objects are small and are used to encapsulate a set of related properties.
-
-|Statistics|
-|---|
-|amount_of_access: int |
 
 ---
 
@@ -138,7 +119,12 @@ In this Entity we have all data that represents the Shortened Url
 
 ---
 
-### **Database Discussion**
+### **Infrastructure Discussion**
+
+![Alt text](./controllers_brief.svg)
+<img src="./infrastructure.drawio.svg">
+
+#### **Database Discussion**
 
 **CAP Theorem**
 
@@ -187,8 +173,83 @@ AP is a good choice if the business needs to allow for eventual consistency or w
  - Frequently accessed ('hot') tables
  - Metadata/lookup tables
 
-Given that the application is going to receive about 10M RPM on peak, and it is a promotion i think the Availability is more important than consistent here, i see the application can relie in eventual consistent where after a write, reads will eventually see it (typically within milliseconds) and ata is replicated asynchronously. So i think that a NoSQL database is well-suited for the problem.
+**Key-value store**
 
+Abstraction: hash table
+
+A key-value store generally allows for O(1) reads and writes and is often backed by memory or SSD. Data stores can maintain keys in lexicographic order, allowing efficient retrieval of key ranges. Key-value stores can allow for storing of metadata with a value.
+
+Key-value stores provide high performance and are often used for simple data models or for rapidly-changing data. Since they offer only a limited set of operations, complexity is shifted to the application layer if additional operations are needed.
+
+##### **Result**
+
+Given that the application is going to receive about 10M RPM on peak, and it is a redirect application i think the Availability is more important than consistent here, i see the application can relie in eventual consistent where after a write, reads will eventually see it (typically within milliseconds) and data is replicated asynchronously. So i think that a **NoSQL** database is well-suited for the problem.
+
+As explained above a Key-value Store Datrabase can be a really eficient for the purpose of this application so the Database chosen is **DynamoDb** .
+
+###### [**DynamoDb**](https://aws.amazon.com/pm/dynamodb/?nc1=h_ls)
+Handle 10 Trillion Request Per day
+Peaks = 20 Million Request Second
+Uptime = 99.999%
+
+If needed we can use [DAX](https://aws.amazon.com/dynamodb/dax/) as caching service to delivery more perfomance improvement - from milisecondes to microseconds. But It's important to know that it will affect cost.
+
+#### Image Repository
+
+For Container Image Repository we can use [ECR](https://aws.amazon.com/ecr/?nc1=h_ls)
+
+#### Monitoring
+
+For Requests and log processing we can use ElasticSearch or AWS OpenSearch. We can add a logstash. Sending events to Logstash lets you decouple event processing from your app. Your app only needs to send events to Logstash and doesn’t need to know anything about what happens to the events afterwards. 
+Other option to logstash is Kinesis FireHose combined with OpenSearch, Kinesis will try to load data on OpenSearch if its fail it will write a document on S3 as contingency
+
+With we want to monitoring metrics as CPU and memory too besides logs, we can use DataDog or AWS CloudWatch.
+
+#### Load Balancer
+
+Load balancers distribute incoming client requests to computing resources such as application servers and databases. In each case, the load balancer returns the response from the computing resource to the appropriate client.
+
+Uptime=99.99%
+
+#### Deploy
+
+For Container Orchestration we can choose between  [Amazon Elastic Container Service(ECS)](https://aws.amazon.com/ecs/?pg=ln&sec=hiw) or [Amazon Elastic Kubernetes Service(EKS)](https://aws.amazon.com/eks/?pg=ln&sec=hiw). The one choosen is ECS.
+With ECS we are going to use [AWS Fargate](https://aws.amazon.com/fargate/?nc1=h_ls). AWS Fargate is a serverless, pay-as-you-go compute engine that lets you focus on building applications without managing servers.
+
+We can use ECS on EC2 instead of AWS Fargate this can reduce the cost. But we would need to worry about EC2 Scaling.
+
+Uptime = 99.99%
+
+#### Availability in numbers
+Availability is often quantified by uptime (or downtime) as a percentage of time the service is available. Availability is generally measured in number of 9s--a service with 99.99% availability is described as having four 9s.
+
+**Availability in parallel vs in sequence**
+If a service consists of multiple components prone to failure, the service's overall availability depends on whether the components are in sequence or in parallel.
+
+##### *In Sequence*
+
+Overall availability decreases when two components with availability < 100% are in sequence:
+
+```math
+Availability (Total) = Availability (Foo) * Availability (Bar)
+```
+
+##### *In Parallel*
+
+Overall availability increases when two components with availability < 100% are in parallel:
+
+```math
+Availability (Total) = 1 - (1 - Availability (Foo)) * (1 - Availability (Bar))
+```
+
+##### **Result**
+```math
+Availability (Total) = Availability (DynamoDb) * Availability (Fargate+ECS) * Availability (Load Balance)
+```
+
+```math
+Availability (Total) = 99.999 * 99.99 * 99.99 = 99.97 > 99.95
+```
 ---
 
 ### Package Manager
@@ -251,6 +312,20 @@ After that, every commit you execute will run all the hooks.
 ---
 
 ### Docker
+
+Docker is an open-source platform that automates the deployment, scaling, and management of applications. It does this through containerization, a lightweight form of virtualization.
+
+Containers can be thought of as isolated environments where applications can run. They include everything that an application needs to run, including the code, runtime, system tools, libraries, and settings. This means that the application will run the same way regardless of the environment it's in.
+
+The key advantages of Docker include:
+
+Consistency: Since a Docker container bundles its own software, libraries, and dependencies, it ensures consistency across multiple development, testing, and production environments.
+
+  1. Isolation: Containers are isolated from each other and from the host system, improving security and allowing multiple containers to run on the same system without interfering with each other.
+
+  2. Portability: Containers can be run on any system that supports Docker, making it easy to deploy applications across multiple environments or cloud platforms.
+
+  3. Scalability: Multiple containers can be run on a single host, and containers can be easily added or removed as needed, making Docker highly scalable.
 
 To run the project with Docker, it is necessary to have it installed on your machine. If you don't have it, follow the instructions from the links:
 - **Ubuntu:** [Install Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
