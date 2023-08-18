@@ -1,8 +1,8 @@
-from tests.conftest import BaseConfTest
+from tests.conftest import BaseRepositoryConfTest
 from tests.short_url.fixtures import ShortUrlEntityFixtures
 
 
-class BaseShortUrlConfTest(BaseConfTest):
+class BaseShortUrlConfTest(BaseRepositoryConfTest):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()

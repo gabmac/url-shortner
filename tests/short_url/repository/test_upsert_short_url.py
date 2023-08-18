@@ -6,6 +6,10 @@ from system.infrastructure.adapters.database.repositories.short_url_repository i
 
 
 class UpsertShortUrl(ShortUrlRepositoryConftest):
+    def tearDown(self) -> None:
+        super().tearDown()
+        self.short_url_model_fixture.mock_short_url_enable_model.delete()
+
     async def test_update_short_url(self):
         self.short_url_model_fixture.mock_short_url_enable_model.save()
         self.assertEqual(

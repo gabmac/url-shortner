@@ -15,11 +15,11 @@ class AWSCredentials:
 
 
 class DataBaseConfiguration:
-    ENDPOINT_URL = os.getenv("DYNAMODB_ENDPOINT_URL", "http://localhost:8000")
-    TABLE = os.getenv("DATABASE_TABLE")
+    ENDPOINT_URL = os.getenv("ENDPOINT_URL", "http://localhost:8000")
+    TABLE = os.getenv("DATABASE_TABLE", "shorturl")
 
 
 class Config:
     DATABASE = DataBaseConfiguration
     CLOUD_CREDENTIALS = AWSCredentials
-    ENVIRONMENT = Environments(os.getenv("ENVIRONMENT")).value
+    ENVIRONMENT = Environments(os.getenv("ENVIRONMENT", "local")).value
