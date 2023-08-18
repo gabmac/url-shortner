@@ -114,7 +114,6 @@ In this Entity we have all data that represents the Shortened Url
 |---|---|---|
 |/create|POST|Create a Short URL|
 |/{url_key}|GET|Fowards to target URL|
-|/admin/{url_key}|GET|Returns URL data and statistics|
 |/admin/{url_key}|PATCH|Update target URL|
 
 ---
