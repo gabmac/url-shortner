@@ -1,3 +1,4 @@
+from datetime import datetime
 from typing import Type
 
 import ulid
@@ -25,6 +26,8 @@ class CreateShortUrlUseCase(RequestUseCase[NewShortUrlRequest, NewShortUrlRespon
             target_url=payload.target_url,
             short_url=ulid.new().str,
             status=ShortUrlStatusEnum.ENABLE,
+            created_at=datetime.utcnow(),
+            updated_at=datetime.utcnow(),
         )
 
         save_url_entity = self.short_url_repository.upsert(

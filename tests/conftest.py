@@ -32,3 +32,7 @@ class BaseRepositoryConfTest(BaseConfTest):
                 write_capacity_units=500,
                 wait=True,
             )
+
+
+class BaseUseCaseConfTest(BaseConfTest):
+    pass

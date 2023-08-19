@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import datetime
 
 import ulid
 
@@ -24,8 +24,8 @@ class ShortUrlEntityFixtures:
             target_url=self.target_url,
             short_url=self.short_url.str,
             status=ShortUrlStatusEnum.ENABLE,
-            created_at=datetime(2023, 3, 9, 16, 0, 0, 0, tzinfo=timezone.utc),
-            updated_at=datetime(2023, 3, 9, 16, 0, 0, 0, tzinfo=timezone.utc),
+            created_at=datetime(2023, 3, 9, 16, 0, 0, 0),
+            updated_at=datetime(2023, 3, 9, 16, 0, 0, 0),
         )
 
     @property
