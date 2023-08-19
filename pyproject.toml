@@ -29,6 +29,7 @@ black = "^23.7.0"
 coverage = "^7.3.0"
 conventional-pre-commit = "^2.3.0"
 freezegun = "^1.2.2"
+httpx = "^0.24.1"
 
 [build-system]
 requires = ["poetry-core"]
