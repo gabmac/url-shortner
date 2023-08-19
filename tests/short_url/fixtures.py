@@ -3,7 +3,7 @@ from datetime import datetime
 import ulid
 
 from system.application.dto.api.requests.url_request import NewShortUrlRequest
-from system.application.dto.api.response.url_response import NewShortUrlResponse
+from system.application.dto.api.response.url_response import ShortUrlResponse
 from system.domain.entities.url_entity import ShortenedUrlEntity
 from system.domain.enums.short_url_enum import ShortUrlStatusEnum
 from system.infrastructure.adapters.database.models.short_url_model import ShortUrlModel
@@ -84,7 +84,7 @@ class ShortRequestDTOFixture:
         )
 
     @property
-    def mock_create_enable_response(self) -> NewShortUrlResponse:
-        return NewShortUrlResponse(
+    def mock_create_enable_response(self) -> ShortUrlResponse:
+        return ShortUrlResponse(
             **self.entity.mock_short_url_enable_entity.model_dump(),
         )
