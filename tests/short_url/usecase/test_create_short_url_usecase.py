@@ -1,3 +1,6 @@
+from unittest.mock import patch
+
+import ulid
 from freezegun import freeze_time
 from tests.short_url.usecase.conftest import ShortUrlUseCaseConfTest
 
@@ -10,13 +13,23 @@ class TestCreateShortUrlUseCase(ShortUrlUseCaseConfTest):
     def setUp(self) -> None:
         super().setUp()
         self.patch_short_use_case_repository.target.upsert.return_value = (
-            self.short_url_entity_fixture.mock_short_url_enable_entity
+            self.short_url_dto_fixture.entity.mock_short_url_enable_entity
         )
         self.patch_short_use_case_repository.target.upsert.side_effect = None
 
+        self.patch_ulid = patch.object(
+            ulid,
+            "new",
+        )
+        self.patch_ulid.start()
+
+        self.patch_ulid.target.new.return_value = (
+            self.short_url_dto_fixture.entity.short_url
+        )
+
     def tearDown(self) -> None:
         super().tearDown()
-        self.patch_short_use_case_repository.target.upsert.return_value.reset_mock()
+        self.patch_short_use_case_repository.target.upsert.reset_mock()
 
     @freeze_time("2023-03-09T16:00:00")
     async def test_create_short_url(self) -> None:
@@ -24,9 +37,9 @@ class TestCreateShortUrlUseCase(ShortUrlUseCaseConfTest):
             CreateShortUrlUseCase().execute(
                 payload=self.short_url_dto_fixture.mock_create_request,
             ),
-            self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
+            self.short_url_dto_fixture.mock_create_enable_response,
         )
 
         self.patch_short_use_case_repository.target.upsert.assert_called_once_with(
-            short_url_entity=self.short_url_entity_fixture.mock_short_url_enable_entity,
+            short_url_entity=self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
         )
