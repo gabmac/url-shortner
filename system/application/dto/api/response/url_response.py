@@ -10,3 +10,7 @@ class ShortUrlResponse(BaseDTO):
     created_at: datetime
     updated_at: datetime
     status: ShortUrlStatusEnum
+
+
+class ViewShortUrlResponse(BaseDTO):
+    response: ShortUrlResponse

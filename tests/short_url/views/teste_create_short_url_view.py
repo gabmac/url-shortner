@@ -1,5 +1,8 @@
+from fastapi import status
 from freezegun import freeze_time
 from tests.short_url.views.conftest import ShortUrlViewConfTest
+
+from system.application.dto.api.response.url_response import ShortUrlResponse
 
 
 class TestCreateShortUrlView(ShortUrlViewConfTest):
@@ -15,11 +18,17 @@ class TestCreateShortUrlView(ShortUrlViewConfTest):
 
     @freeze_time("2023-03-09T16:00:00")
     async def test_create_short_url(self) -> None:
+        response = self.client.post(
+            self.url_create,
+            json=self.short_url_dto_fixture.mock_create_request,
+        )
+
         self.assertEqual(
-            self.client.post(
-                self.url_create,
-                json=self.short_url_dto_fixture.mock_create_request,
-            ),
+            response.status_code,
+            status.HTTP_201_CREATED,
+        )
+        self.assertEqual(
+            ShortUrlResponse(**response.json()["response"]),
             self.short_url_dto_fixture.mock_create_enable_response,
         )
 
