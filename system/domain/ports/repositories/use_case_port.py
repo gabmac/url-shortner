@@ -11,3 +11,9 @@ class RequestUseCase(ABC, Generic[T, S]):
     @abstractmethod
     def execute(self, payload: T) -> S:
         pass
+
+
+class RequestUseCaseWithoutBody(ABC, Generic[S]):
+    @abstractmethod
+    def execute(self, payload: str) -> S:
+        pass
