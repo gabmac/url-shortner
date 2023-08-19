@@ -23,4 +23,8 @@ class BaseRepositoryConfTest(BaseConfTest):
     def setUpClass(cls) -> None:
         super().setUpClass()
         if not BaseModel.exists() and Config.ENVIRONMENT == Environments.LOCAL.value:
-            BaseModel.create_table()
+            BaseModel.create_table(
+                read_capacity_units=500,
+                write_capacity_units=500,
+                wait=True,
+            )

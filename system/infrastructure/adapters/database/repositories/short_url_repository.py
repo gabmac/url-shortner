@@ -15,7 +15,7 @@ class ShortUrlRepository(ShortUrlRepositoryPort):
         """
         Method that Upserts Short Url data on database
         """
-        model = ShortUrlModel(**short_url_entity.to_jsonable_dict())
+        model = ShortUrlModel(**short_url_entity.model_dump())
 
         model.save()
 

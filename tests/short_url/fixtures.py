@@ -43,12 +43,8 @@ class ShortUrlModelFixture:
 
     @property
     def mock_short_url_enable_model(self) -> ShortUrlModel:
-        return ShortUrlModel(
-            **self.entity.mock_short_url_enable_entity.to_jsonable_dict()
-        )
+        return ShortUrlModel(**self.entity.mock_short_url_enable_entity.model_dump())
 
     @property
     def mock_short_url_disable_model(self) -> ShortenedUrlEntity:
-        return ShortUrlModel(
-            **self.entity.mock_short_url_disable_entity.to_jsonable_dict()
-        )
+        return ShortUrlModel(**self.entity.mock_short_url_disable_entity.model_dump())
