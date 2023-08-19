@@ -72,9 +72,12 @@ class ShortRequestDTOFixture:
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url
-        self.entity = ShortUrlEntityFixtures(
+
+    @property
+    def entity(self) -> ShortUrlEntityFixtures:
+        return ShortUrlEntityFixtures(
             target_url=self.target_url,
-            short_url=short_url,
+            short_url=self.short_url,
         )
 
     @property
