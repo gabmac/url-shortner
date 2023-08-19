@@ -5,10 +5,10 @@ from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
 
+from system.infrastructure.adapters.entrypoints.api.router import api_router
 from system.infrastructure.cross_cutting.middleware_logging import (
     RequestContextLogMiddleware,
 )
-from system.infrastructure.entrypoints.api.router import api_router
 
 
 class AppConfig:

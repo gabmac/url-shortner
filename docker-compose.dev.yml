@@ -9,17 +9,18 @@ services:
     - "8000:8000"
     working_dir: /home/dynamodblocal
 
-    api:
-      build:
-        context: .
-        dockerfile: ./Dockerfile
-      command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m system"]
-      image: api-local:${TESTE_VERSION:-latest}
-      restart: always
-      volumes:
-      - .:/code
-      env_file:
-      - .env
-      ports:
-      - "9000:9000"
-      - "5678:5678"
+
+  api:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m system"]
+    image: teste:${TESTE_VERSION:-latest}
+    restart: always
+    volumes:
+    - .:/code
+    env_file:
+    - .env
+    ports:
+    - "9000:9000"
+    - "5678:5678"

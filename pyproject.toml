@@ -4,16 +4,15 @@ version = "0.1.0"
 description = "Url Shortner for Twitter Promotion Camapign"
 authors = ["Gabriel <gabrielbonanimachado@gmail.com>"]
 readme = "README.md"
-packages = [{include = "url_shortner"}]
 
 [tool.poetry.dependencies]
 python = "^3.10"
 pydantic = "^2.2.0"
-black = "^23.7.0"
 pynamodb = "^5.5.0"
 boto3 = "^1.28.29"
 ulid-py = "^1.1.0"
 fastapi = "^0.101.1"
+uvicorn = "^0.23.2"
 
 
 [tool.poetry.group.code-smells.dependencies]
@@ -23,6 +22,7 @@ isort = "^5.12.0"
 pre-commit = "^3.3.3"
 autoflake = "^2.2.0"
 pylint = "^2.17.5"
+black = "^23.7.0"
 
 
 [tool.poetry.group.dev.dependencies]
@@ -32,14 +32,14 @@ freezegun = "^1.2.2"
 
 [build-system]
 requires = ["poetry-core"]
-build-backend = "poetry.core.system.adapter_entrypoints.api"
+build-backend = "poetry.core.system.infrastructure.adapters.entrypoints.api"
 
 
 [tool.coverage.run]
 branch = true
 include = [
-    "system/adapter_entrypoints/api/routes/*",
-    "system/adapter_entrypoints/events/events_init.py",
+    "system/infrastructure/entrypoints/api/routes/*",
+    "system/infrastructure/entrypoints/events/events_init.py",
     "system/application/usecase/*",
     "system/infrastructure/adapters/database/repositories/*",
 ]
