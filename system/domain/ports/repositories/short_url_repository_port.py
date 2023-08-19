@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Any, Dict
+from typing import List, Optional
 
 from system.domain.entities.url_entity import ShortenedUrlEntity
 
@@ -15,10 +15,12 @@ class ShortUrlRepositoryPort(ABC):
         """
 
     @abstractmethod
-    def select(
+    def query(
         self,
-        filter: Dict[str, Any] = {},
-    ) -> ShortenedUrlEntity:
+        hash_key: str,
+        range_key: Optional[str] = None,
+        status: Optional[str] = None,
+    ) -> List[ShortenedUrlEntity]:
         """
         Method that Returns a Short Url given a filter
         """

@@ -13,8 +13,9 @@ class ShortUrlModel(BaseModel):
     updated_at = UTCDateTimeAttribute(default_for_new=datetime.utcnow)
     status = UnicodeAttribute()
 
-    def __init__(self, **attributes: Any) -> None:
-        attributes["pk"] = "ROUTE"
-        attributes["sk"] = attributes["short_url"]
+    def __init__(self, populate_all_fields: bool = False, **attributes: Any) -> None:
+        if populate_all_fields:
+            attributes["pk"] = "ROUTE"
+            attributes["sk"] = attributes["short_url"]
 
         super().__init__(**attributes)
