@@ -20,4 +20,15 @@ class UpdateShortUrlUseCase(RequestUseCase[UpdateShortUrlDTO, ShortUrlResponse])
         self,
         payload: UpdateShortUrlDTO,
     ) -> ShortUrlResponse:
-        raise Exception(payload)
+        short_url = self.short_url_repository.query(
+            hash_key="ROUTE",
+            range_key=payload.short_url,
+        )[0]
+
+        short_url.status = payload.status
+
+        return ShortUrlResponse.model_validate(
+            self.short_url_repository.upsert(
+                short_url_entity=short_url,
+            ),
+        )

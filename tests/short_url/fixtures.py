@@ -88,3 +88,9 @@ class ShortRequestDTOFixture:
         return ShortUrlResponse(
             **self.entity.mock_short_url_enable_entity.model_dump(),
         )
+
+    @property
+    def mock_create_disable_response(self) -> ShortUrlResponse:
+        return ShortUrlResponse(
+            **self.entity.mock_short_url_disable_entity.model_dump(),
+        )
