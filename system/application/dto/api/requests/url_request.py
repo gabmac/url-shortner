@@ -1,3 +1,5 @@
+from typing import Optional
+
 from pydantic import Field
 
 from system.application.dto.base_dto import BaseDTO
@@ -9,8 +11,11 @@ class NewShortUrlRequest(BaseDTO):
     target_url: str = Field(pattern=RegexValidationEnum.twitter_url_regex.value)
 
 
-class UpdateShortUrlRequest(NewShortUrlRequest):
-    status: ShortUrlStatusEnum
+class UpdateShortUrlRequest(BaseDTO):
+    target_url: Optional[str] = Field(
+        pattern=RegexValidationEnum.twitter_url_regex.value,
+    )
+    status: Optional[ShortUrlStatusEnum]
 
 
 class UpdateShortUrlDTO(UpdateShortUrlRequest):

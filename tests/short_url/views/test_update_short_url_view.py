@@ -24,11 +24,11 @@ class TestUpdateShortUrlView(ShortUrlViewConfTest):
     async def test_update_short_url(self) -> None:
         response = self.client.patch(
             f"{self.url_update}/{self.short_url_dto_fixture.entity.mock_short_url_disable_entity.short_url}",
-            json=self.short_url_dto_fixture.mock_disable_request,
+            json=self.short_url_dto_fixture.mock_disable_request.model_dump(),
         )
 
         self.assertEqual(
-            status.HTTP_200_OK,
+            status.HTTP_201_CREATED,
             response.status_code,
         )
         self.assertEqual(
@@ -52,12 +52,12 @@ class TestUpdateShortUrlView(ShortUrlViewConfTest):
 
         response = self.client.patch(
             f"{self.url_update}/{self.short_url_dto_fixture.entity.mock_short_url_disable_entity.short_url}",
-            json=self.short_url_dto_fixture.mock_disable_request,
+            json=self.short_url_dto_fixture.mock_disable_request.model_dump(),
         )
 
         self.assertEqual(
             response.status_code,
-            status.HTTP_400_BAD_REQUEST,
+            status.HTTP_404_NOT_FOUND,
         )
 
         self.patch_short_update_usecase.target.execute.assert_called_once_with(

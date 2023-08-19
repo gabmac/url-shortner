@@ -77,7 +77,7 @@ class TestUpdateShortUrlUseCase(ShortUrlUseCaseConfTest):
         )
 
         self.patch_short_use_case_repository.target.upsert.assert_called_once_with(
-            short_url_entity=self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
+            short_url_entity=self.short_url_dto_fixture_change_target.entity.mock_short_url_enable_entity,
         )
 
     async def test_update_non_existent_short_url(self) -> None:

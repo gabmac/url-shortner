@@ -29,7 +29,11 @@ class UpdateShortUrlUseCase(RequestUseCase[UpdateShortUrlDTO, ShortUrlResponse])
                 range_key=payload.short_url,
             )[0]
 
-            short_url.status = payload.status
+            if payload.status is not None:
+                short_url.status = payload.status
+            if payload.target_url is not None:
+                short_url.target_url = payload.target_url
+
         except IndexError:
             raise NoURLWasFoundError()
 
