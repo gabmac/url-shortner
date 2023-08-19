@@ -41,7 +41,7 @@ class BaseUseCaseConfTest(BaseConfTest):
     pass
 
 
-class BaseRouteConfTest(BaseConfTest):
+class BaseviewConfTest(BaseConfTest):
     fastapi_app = app
 
     @property
