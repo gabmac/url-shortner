@@ -5,4 +5,4 @@ from system.application.enums.regex_validation_enums import RegexValidationEnum
 
 
 class NewShortUrlRequest(BaseDTO):
-    redirect_url: str = Field(regex=RegexValidationEnum.twitter_url_regex.value)
+    target_url: str = Field(pattern=RegexValidationEnum.twitter_url_regex.value)
