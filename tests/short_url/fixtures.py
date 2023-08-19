@@ -8,7 +8,7 @@ from system.infrastructure.adapters.database.models.short_url_model import Short
 class ShortUrlEntityFixtures:
     def __init__(
         self,
-        redirect_url: str = "https://google.com.br",
+        redirect_url: str = "https://twitter.com.br",
         short_url: str = "ShOrT",
     ) -> None:
         self.redirect_url = redirect_url
@@ -35,7 +35,7 @@ class ShortUrlEntityFixtures:
 class ShortUrlModelFixture:
     def __init__(
         self,
-        redirect_url: str = "https://google.com.br",
+        redirect_url: str = "https://twitter.com.br",
         short_url: str = "ShOrT",
     ) -> None:
         self.redirect_url = redirect_url
