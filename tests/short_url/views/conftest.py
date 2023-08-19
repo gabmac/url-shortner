@@ -29,8 +29,8 @@ class ShortUrlViewConfTest(BaseShortUrlConfTest, BaseviewConfTest):
         cls.patch_short_update_usecase.start()
 
         cls.url_create = cls.fastapi_app.url_path_for("create_short_url")
-        cls.url_update = cls.fastapi_app.url_path_for("update_short_url")
-        cls.url_get = cls.fastapi_app.url_path_for("get_short_url")
+        # cls.url_update = cls.fastapi_app.url_path_for("update_short_url")
+        # cls.url_get = cls.fastapi_app.url_path_for("get_short_url")
 
         cls.patch_ulid = patch.object(
             ulid,

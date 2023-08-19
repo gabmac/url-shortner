@@ -20,7 +20,7 @@ class TestCreateShortUrlView(ShortUrlViewConfTest):
     async def test_create_short_url(self) -> None:
         response = self.client.post(
             self.url_create,
-            json=self.short_url_dto_fixture.mock_create_request,
+            json=self.short_url_dto_fixture.mock_create_request.model_dump(),
         )
 
         self.assertEqual(
@@ -33,5 +33,5 @@ class TestCreateShortUrlView(ShortUrlViewConfTest):
         )
 
         self.patch_short_create_usecase.target.execute.assert_called_once_with(
-            self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
+            payload=self.short_url_dto_fixture.mock_create_request,
         )

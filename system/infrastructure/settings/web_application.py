@@ -9,6 +9,8 @@ from system.infrastructure.adapters.entrypoints.api.router import api_router
 from system.infrastructure.cross_cutting.middleware_logging import (
     RequestContextLogMiddleware,
 )
+from system.infrastructure.enums.environment_enum import Environments
+from system.infrastructure.settings.config import Config
 
 
 class AppConfig:
@@ -59,11 +61,14 @@ class AppConfig:
         )
 
     @staticmethod
+    # pylint: disable=unused-argument
     async def exception_handler(request: Request, exc: Exception) -> None:
-        raise HTTPException(
-            detail="Something fail",
-            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-        )
+        # pylint: enable=unused-argument
+        if Config.ENVIRONMENT != Environments.LOCAL.value:
+            raise HTTPException(
+                detail="Something fail",
+                status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
 
     def init_request_log(self) -> None:
         """Initalize ElasticLogger"""
