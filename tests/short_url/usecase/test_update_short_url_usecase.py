@@ -3,6 +3,9 @@ import copy
 from tests.short_url.usecase.conftest import ShortUrlUseCaseConfTest
 
 from system.application.dto.api.requests.url_request import UpdateShortUrlDTO
+from system.application.usecase.short_url.exceptions.create_short_url_exception import (
+    NoURLWasFoundError,
+)
 from system.application.usecase.short_url.update_short_url_usecase import (
     UpdateShortUrlUseCase,
 )
@@ -78,4 +81,26 @@ class TestUpdateShortUrlUseCase(ShortUrlUseCaseConfTest):
         )
 
     async def test_update_non_existent_short_url(self) -> None:
-        raise Exception()
+        self.patch_short_use_case_repository.target.query.return_value = []
+        short_url = "234567f"
+
+        with self.assertRaises(NoURLWasFoundError) as error:
+            UpdateShortUrlUseCase().execute(
+                payload=UpdateShortUrlDTO(
+                    target_url=self.short_url_dto_fixture.entity.mock_short_url_disable_entity.target_url,
+                    status=self.short_url_dto_fixture.entity.mock_short_url_disable_entity.status,
+                    short_url=short_url,
+                ),
+            )
+
+            self.assertEqual(
+                error.message,
+                NoURLWasFoundError().message,
+            )
+
+            self.patch_short_use_case_repository.target.query.assert_called_once_with(
+                hash_key="ROUTE",
+                range_key=short_url,
+            )
+
+            self.patch_short_use_case_repository.target.upsert.assert_not_called()
