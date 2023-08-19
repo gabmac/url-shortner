@@ -5,7 +5,7 @@ from system.infrastructure.adapters.database.repositories.short_url_repository i
 )
 
 
-class SelectShortUrl(ShortUrlRepositoryConftest):
+class TestSelectShortUrl(ShortUrlRepositoryConftest):
     @classmethod
     def setUpClass(cls) -> None:
         super().setUpClass()
