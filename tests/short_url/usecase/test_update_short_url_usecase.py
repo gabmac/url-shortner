@@ -29,6 +29,7 @@ class TestUpdateShortUrlUseCase(ShortUrlUseCaseConfTest):
     def tearDown(self) -> None:
         super().tearDown()
         self.patch_short_use_case_repository.target.upsert.reset_mock()
+        self.patch_short_use_case_repository.target.query.reset_mock()
 
     async def test_change_status_short_url(self) -> None:
         self.assertEqual(
