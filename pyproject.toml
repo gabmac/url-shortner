@@ -13,6 +13,7 @@ black = "^23.7.0"
 pynamodb = "^5.5.0"
 boto3 = "^1.28.29"
 ulid-py = "^1.1.0"
+fastapi = "^0.101.1"
 
 
 [tool.poetry.group.code-smells.dependencies]
