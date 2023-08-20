@@ -23,7 +23,7 @@ class CreateShortUrlUseCase(RequestUseCase[NewShortUrlRequest, ShortUrlResponse]
 
     def execute(self, payload: NewShortUrlRequest) -> ShortUrlResponse:
         short_url_entity = ShortenedUrlEntity(
-            target_url=payload.target_url,
+            target_url=self._https_prefix(target_url=payload.target_url),
             short_url=self._create_short_url(),
             status=ShortUrlStatusEnum.ENABLE,
             created_at=datetime.utcnow(),
@@ -42,3 +42,11 @@ class CreateShortUrlUseCase(RequestUseCase[NewShortUrlRequest, ShortUrlResponse]
         hex_list = list(hex_time)
 
         return "".join(random.sample(hex_list, len(hex_list)))
+
+    def _https_prefix(self, target_url: str) -> str:
+        if not (
+            target_url.startswith(r"https://") or target_url.startswith(r"http://")
+        ):
+            target_url = rf"https://{target_url}"
+
+        return target_url

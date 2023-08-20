@@ -43,3 +43,16 @@ class TestCreateShortUrlUseCase(ShortUrlUseCaseConfTest):
         self.patch_short_use_case_repository.target.upsert.assert_called_once_with(
             short_url_entity=self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
         )
+
+    @freeze_time("2023-03-09T16:00:00")
+    async def test_create_short_url_without_prefix(self) -> None:
+        self.assertEqual(
+            CreateShortUrlUseCase().execute(
+                payload=self.short_url_dto_fixture.mock_create_request_without_prefix,
+            ),
+            self.short_url_dto_fixture.mock_create_enable_response,
+        )
+
+        self.patch_short_use_case_repository.target.upsert.assert_called_once_with(
+            short_url_entity=self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
+        )

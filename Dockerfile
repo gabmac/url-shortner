@@ -15,7 +15,9 @@ RUN pip install poetry
 RUN poetry config virtualenvs.create false
 
 #Copying to code
-COPY . /code
+COPY poetry.lock /code
+COPY pyproject.toml /code
+COPY system code/
 
 # Exports poetry dependencies to a requirements.txt file
 RUN poetry install --only main

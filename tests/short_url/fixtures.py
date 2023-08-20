@@ -88,6 +88,12 @@ class ShortRequestDTOFixture:
         )
 
     @property
+    def mock_create_request_without_prefix(self) -> NewShortUrlRequest:
+        return NewShortUrlRequest(
+            target_url=self.entity.target_url.replace(r"https://", ""),
+        )
+
+    @property
     def mock_disable_request(self) -> NewShortUrlRequest:
         return UpdateShortUrlRequest(
             target_url=self.entity.target_url,
