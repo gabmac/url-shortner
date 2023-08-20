@@ -360,7 +360,7 @@ Then run:
 $ docker compose -f docker-compose.dev.yml up
 ```
 
-Be sure that OpenSearch Node is up, what else the api can returns 500:
+Be sure that OpenSearch Node is up, what else the api can returns 500.
 
 ---
 
