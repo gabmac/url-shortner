@@ -1,7 +1,5 @@
 from datetime import datetime
 
-import ulid
-
 from system.application.dto.api.requests.url_request import (
     NewShortUrlRequest,
     UpdateShortUrlRequest,
@@ -16,7 +14,7 @@ class ShortUrlEntityFixtures:
     def __init__(
         self,
         target_url: str = "https://twitter.com/home",
-        short_url: ulid.ULID = ulid.new(),
+        short_url: str = "x24eb5601f",
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url
@@ -25,7 +23,7 @@ class ShortUrlEntityFixtures:
     def mock_short_url_enable_entity(self) -> ShortenedUrlEntity:
         return ShortenedUrlEntity(
             target_url=self.target_url,
-            short_url=self.short_url.str,
+            short_url=self.short_url,
             status=ShortUrlStatusEnum.ENABLE,
             created_at=datetime(2023, 3, 9, 16, 0, 0, 0),
             updated_at=datetime(2023, 3, 9, 16, 0, 0, 0),
@@ -43,7 +41,7 @@ class ShortUrlModelFixture:
     def __init__(
         self,
         target_url: str = "https://twitter.com/home",
-        short_url: ulid.ULID = ulid.new(),
+        short_url: str = "x24eb5601f",
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url
@@ -71,7 +69,7 @@ class ShortRequestDTOFixture:
     def __init__(
         self,
         target_url: str = "https://twitter.com/home",
-        short_url: ulid.ULID = ulid.new(),
+        short_url: str = "x24eb5601f",
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url

@@ -1,6 +1,6 @@
+import random
 from unittest.mock import patch
 
-import ulid
 from freezegun import freeze_time
 from tests.short_url.usecase.conftest import ShortUrlUseCaseConfTest
 
@@ -17,14 +17,14 @@ class TestCreateShortUrlUseCase(ShortUrlUseCaseConfTest):
         )
         self.patch_short_use_case_repository.target.upsert.side_effect = None
 
-        self.patch_ulid = patch.object(
-            ulid,
-            "new",
+        self.patch_sample = patch.object(
+            random,
+            "sample",
         )
-        self.patch_ulid.start()
+        self.patch_sample.start()
 
-        self.patch_ulid.target.new.return_value = (
-            self.short_url_dto_fixture.entity.short_url
+        self.patch_sample.target.sample.return_value = list(
+            self.short_url_dto_fixture.entity.short_url,
         )
 
     def tearDown(self) -> None:

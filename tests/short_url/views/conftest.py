@@ -1,6 +1,6 @@
+import random
 from unittest.mock import patch
 
-import ulid
 from tests.conftest import BaseviewConfTest
 from tests.short_url.conftest import BaseShortUrlConfTest
 from tests.short_url.fixtures import ShortRequestDTOFixture
@@ -41,14 +41,14 @@ class ShortUrlViewConfTest(BaseShortUrlConfTest, BaseviewConfTest):
         cls.url_update = "/api/short/admin"
         cls.url_redirect = "/api/short"
 
-        cls.patch_ulid = patch.object(
-            ulid,
-            "new",
+        cls.patch_random = patch.object(
+            random,
+            "sample",
         )
-        cls.patch_ulid.start()
+        cls.patch_random.start()
 
-        cls.patch_ulid.target.new.return_value = (
-            cls.short_url_dto_fixture.entity.short_url
-        )
+        cls.patch_random.target.sample.return_value = [
+            cls.short_url_dto_fixture.entity.short_url,
+        ]
 
         super().setUpClass()
