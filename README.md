@@ -397,7 +397,7 @@ The test will run automatically in the CI.
 you can run:
 
 ```bash
-$ docker compose up dynamodb-local
+$ docker compose -f docker-compose.dev.yml up dynamodb-local
 ```
 
 #### Test Coverage
