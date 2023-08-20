@@ -16,8 +16,10 @@ services:
       context: .
       dockerfile: ./Dockerfile
       args:
-      - INSTALL_COMMAND=poetry install --without code-smells,dev
-    command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m system"]
+      # - INSTALL_COMMAND=poetry install --without code-smells,dev
+      - INSTALL_COMMAND=poetry install --only main
+    # command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m system"]
+    command: ["sh", "-c", "python -m system"]
     image: teste:${TESTE_VERSION:-latest}
     restart: always
     volumes:
@@ -35,6 +37,10 @@ services:
     - ELASTICSEARCH_ACTIVE=true
     networks:
     - os-net
+    depends_on:
+    - opensearch-node1
+    - dynamodb-local
+
 
   opensearch-node1:
     image: opensearchproject/opensearch:2.1.0
