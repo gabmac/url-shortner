@@ -20,4 +20,4 @@ class ViewShortUrlResponse(BaseDTO):
 
 
 class ListAllShortUrlResponse(BaseDTO):
-    response = List[ShortUrlResponse]
+    response: List[ShortUrlResponse]
