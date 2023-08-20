@@ -39,8 +39,7 @@ build-backend = "poetry.core.system.infrastructure.adapters.entrypoints.api"
 [tool.coverage.run]
 branch = true
 include = [
-    "system/infrastructure/entrypoints/api/routes/*",
-    "system/infrastructure/entrypoints/events/events_init.py",
+    "system/infrastructure/adapters/entrypoints/api/routes/*",
     "system/application/usecase/*",
     "system/infrastructure/adapters/database/repositories/*",
 ]

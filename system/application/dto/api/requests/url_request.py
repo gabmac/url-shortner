@@ -15,7 +15,7 @@ class UpdateShortUrlRequest(BaseDTO):
     target_url: Optional[  # type: ignore[valid-type]
         constr(pattern=RegexValidationEnum.twitter_url_regex.value)
     ] = None
-    status: Optional[ShortUrlStatusEnum]
+    status: Optional[ShortUrlStatusEnum] = None
 
 
 class UpdateShortUrlDTO(UpdateShortUrlRequest):
