@@ -435,6 +435,4 @@ Clean architecture is composed of several layers, which typically include:
 
 **Application**: The application layer is responsible for orchestrating the actions of the system, applying the business rules of the entity layer.
 
-**Adapter Entrypoints**: This is the layer responsible for dealing with user interaction, whether through a graphical interface, an API, or any other means of communication.
-
 **Infrastructure**: This is the layer responsible for implementing technical details, such as access to databases, calls to external services, etc.
