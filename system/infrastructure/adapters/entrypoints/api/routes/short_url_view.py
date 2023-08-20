@@ -1,6 +1,7 @@
 from typing import Type
 
 from fastapi import APIRouter, HTTPException, status
+from fastapi.responses import RedirectResponse
 
 from system.application.dto.api.requests.url_request import (
     NewShortUrlRequest,
@@ -57,6 +58,13 @@ class ShortUrlView:
             methods=["PATCH"],
         )
 
+        self.router.add_api_route(
+            "/{short_url}",
+            self.redirect_short_url,
+            status_code=status.HTTP_307_TEMPORARY_REDIRECT,
+            methods=["GET"],
+        )
+
     async def create_short_url(
         self,
         payload: NewShortUrlRequest,
@@ -91,3 +99,21 @@ class ShortUrlView:
                 detail=error.message,
                 status_code=status.HTTP_404_NOT_FOUND,
             )
+
+    async def redirect_short_url(
+        self,
+        short_url: str,
+    ) -> RedirectResponse:
+        try:
+            short_url_entity = self.redirect_use_case.execute(
+                payload=short_url,
+            )
+        except NoURLWasFoundError as error:
+            raise HTTPException(
+                detail=error.message,
+                status_code=status.HTTP_404_NOT_FOUND,
+            )
+
+        return RedirectResponse(
+            url=short_url_entity.target_url,
+        )

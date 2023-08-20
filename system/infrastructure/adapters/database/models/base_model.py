@@ -16,3 +16,11 @@ class BaseModel(Model):
 
     pk = UnicodeAttribute(hash_key=True)
     sk = UnicodeAttribute(range_key=True)
+
+
+if not BaseModel.exists() and Config.ENVIRONMENT == Environments.LOCAL.value:
+    BaseModel.create_table(
+        read_capacity_units=25,
+        write_capacity_units=25,
+        wait=True,
+    )

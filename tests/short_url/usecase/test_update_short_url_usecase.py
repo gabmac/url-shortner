@@ -26,7 +26,7 @@ class TestUpdateShortUrlUseCase(ShortUrlUseCaseConfTest):
             self.short_url_dto_fixture,
         )
         self.short_url_dto_fixture_change_target.target_url = (
-            "https://twitter.com/teste123"
+            "https://twitter.com/home/teste123"
         )
 
     def tearDown(self) -> None:

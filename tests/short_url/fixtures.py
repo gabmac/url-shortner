@@ -15,7 +15,7 @@ from system.infrastructure.adapters.database.models.short_url_model import Short
 class ShortUrlEntityFixtures:
     def __init__(
         self,
-        target_url: str = "https://twitter.com.br",
+        target_url: str = "https://twitter.com/home",
         short_url: ulid.ULID = ulid.new(),
     ) -> None:
         self.target_url = target_url
@@ -42,7 +42,7 @@ class ShortUrlEntityFixtures:
 class ShortUrlModelFixture:
     def __init__(
         self,
-        target_url: str = "https://twitter.com.br",
+        target_url: str = "https://twitter.com/home",
         short_url: ulid.ULID = ulid.new(),
     ) -> None:
         self.target_url = target_url
@@ -70,7 +70,7 @@ class ShortUrlModelFixture:
 class ShortRequestDTOFixture:
     def __init__(
         self,
-        target_url: str = "https://twitter.com.br",
+        target_url: str = "https://twitter.com/home",
         short_url: ulid.ULID = ulid.new(),
     ) -> None:
         self.target_url = target_url

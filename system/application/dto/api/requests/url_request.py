@@ -1,6 +1,6 @@
 from typing import Optional
 
-from pydantic import Field
+from pydantic import Field, constr
 
 from system.application.dto.base_dto import BaseDTO
 from system.application.enums.regex_validation_enums import RegexValidationEnum
@@ -12,9 +12,9 @@ class NewShortUrlRequest(BaseDTO):
 
 
 class UpdateShortUrlRequest(BaseDTO):
-    target_url: Optional[str] = Field(
-        pattern=RegexValidationEnum.twitter_url_regex.value,
-    )
+    target_url: Optional[  # type: ignore[valid-type]
+        constr(pattern=RegexValidationEnum.twitter_url_regex.value)
+    ] = None
     status: Optional[ShortUrlStatusEnum]
 
 
