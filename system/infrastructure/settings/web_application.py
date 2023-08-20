@@ -3,9 +3,11 @@ from typing import Any, Awaitable, Callable, Coroutine, List
 
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.base import BaseHTTPMiddleware
 
 from system.infrastructure.adapters.entrypoints.api.router import api_router
+from system.infrastructure.cross_cutting.middleware_context import (
+    RequestContextsMiddleware,
+)
 from system.infrastructure.cross_cutting.middleware_logging import (
     RequestContextLogMiddleware,
 )
@@ -19,7 +21,6 @@ class AppConfig:
     def __init__(
         self,
         init_applications: List[Callable[[Any], Any]],
-        context_logger: RequestContextLogMiddleware = RequestContextLogMiddleware(),
     ):
         self.init_applications = init_applications
         self.app = FastAPI(
@@ -35,7 +36,6 @@ class AppConfig:
             exc_class_or_status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             handler=self.exception_handler,
         )
-        self.context_logger = context_logger
 
     @staticmethod
     def startup(
@@ -70,11 +70,15 @@ class AppConfig:
                 status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             )
 
+    def init_context(self) -> None:
+        self.app.add_middleware(
+            RequestContextsMiddleware,
+        )
+
     def init_request_log(self) -> None:
         """Initalize ElasticLogger"""
         self.app.add_middleware(
-            BaseHTTPMiddleware,
-            dispatch=self.context_logger.dispatch,
+            RequestContextLogMiddleware,
         )
 
     def init_routes(self) -> None:
@@ -83,9 +87,9 @@ class AppConfig:
 
     def start_application(self) -> FastAPI:
         """Start Application with Environment"""
+        self.init_context()
         self.init_request_log()
         self.init_cors()
-        self.init_routes()
         self.init_routes()
         return self.app
 

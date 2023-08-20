@@ -1,4 +1,6 @@
 """Initialize Uvicorn."""
+from logging.config import dictConfig
+
 import uvicorn
 
 from system.infrastructure.enums.environment_enum import Environments
@@ -13,6 +15,8 @@ def api() -> None:
     else:
         log_level = "info"
         reload = False
+
+    dictConfig(Config.LOGGER.CONFIG)
 
     uvicorn.run(
         "system.infrastructure.settings.web_application:app",

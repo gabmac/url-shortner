@@ -1,10 +1,12 @@
+import logging
 from datetime import datetime
 from typing import Any, Awaitable, Callable, Dict
 
 from fastapi import Request, Response
+from starlette.middleware.base import BaseHTTPMiddleware
 
 
-class RequestContextLogMiddleware:
+class RequestContextLogMiddleware(BaseHTTPMiddleware):
     async def dispatch(
         self,
         request: Request,
@@ -52,7 +54,8 @@ class RequestContextLogMiddleware:
             "response-content": str(response_content),
         }
 
-        print(document)
+        logger = logging.getLogger("short-url")
+        logger.info(document)
 
         return Response(
             content=response_body,  # type: ignore
