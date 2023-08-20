@@ -1,12 +1,35 @@
 import logging
 from datetime import datetime
-from typing import Any, Awaitable, Callable, Dict
+from typing import Any, Awaitable, Callable, Dict, Optional, Type, Union
 
 from fastapi import Request, Response
-from starlette.middleware.base import BaseHTTPMiddleware
+from starlette.middleware.base import BaseHTTPMiddleware, DispatchFunction
+from starlette.types import ASGIApp
+
+from system.infrastructure.adapters.elastic.elastic_logger import ElasticsearchLogger
+from system.infrastructure.enums.environment_enum import Environments
+from system.infrastructure.settings.config import Config
 
 
 class RequestContextLogMiddleware(BaseHTTPMiddleware):
+    def __init__(
+        self,
+        app: ASGIApp,
+        dispatch: DispatchFunction | None = None,
+        elastic: Type[ElasticsearchLogger] = ElasticsearchLogger,
+    ) -> None:
+        super().__init__(app, dispatch)
+        self.elastic = None
+        if Config.ELASTIC.ACTIVE:
+            self.elastic = elastic(
+                host=Config.ELASTIC.HOST,
+                port=Config.ELASTIC.PORT,
+                service_name=Config.ELASTIC.INDEX,
+                simulate=True
+                if Config.ENVIRONMENT == Environments.LOCAL.value
+                else False,
+            )
+
     async def dispatch(
         self,
         request: Request,
@@ -54,6 +77,9 @@ class RequestContextLogMiddleware(BaseHTTPMiddleware):
             "response-content": str(response_content),
         }
 
+        if self.elastic is not None:
+            self.elastic.create_document(document_dict=document)
+
         logger = logging.getLogger("short-url")
         logger.info(document)
 
@@ -67,13 +93,20 @@ class RequestContextLogMiddleware(BaseHTTPMiddleware):
     async def set_body(self, request: Request, body: bytes) -> None:
         """Set body from RequestArgs"""
 
-        async def receive() -> Dict[str, Any]:
-            return {"type": "http.request", "body": body}
+        async def receive() -> Optional[Dict[str, Union[bytes, str]]]:
+            if self.elastic is not None:
+                await self.elastic.set_body(request=request, body=body)
+                return None
+            else:
+                return {"type": "http.request", "body": body}
 
-        request._receive = receive  # noqa: WPS437
+        request._receive = receive  # type: ignore
 
     async def get_body(self, request: Request) -> bytes:
         """Get body from request"""
+        if self.elastic is not None:
+            return await self.elastic.get_body(request=request)
+
         body = await request.body()
         await self.set_body(request, body)
         return body

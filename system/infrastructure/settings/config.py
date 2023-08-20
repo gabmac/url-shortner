@@ -19,6 +19,13 @@ class DataBaseConfiguration:
     TABLE = os.getenv("DATABASE_TABLE", "shorturl")
 
 
+class ElasticSearchConfig:
+    HOST = os.getenv("ELASTICSEARCH_HOST", "localhost")
+    PORT = os.getenv("ELASTICSEARCH_PORT", "9200")
+    INDEX = os.getenv("ELASTICSEARCH_INDEX", "local_index")
+    ACTIVE = os.getenv("ELASTICSEARCH_ACTIVE", "false") == "true"
+
+
 class Logger:
     CONFIG = {
         "version": 1,
@@ -48,3 +55,4 @@ class Config:
     CLOUD_CREDENTIALS = AWSCredentials
     ENVIRONMENT = Environments(os.getenv("ENVIRONMENT", "local")).value
     LOGGER = Logger
+    ELASTIC = ElasticSearchConfig
