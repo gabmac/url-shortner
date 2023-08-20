@@ -362,6 +362,15 @@ $ docker compose -f docker-compose.dev.yml up
 
 Be sure that OpenSearch Node is up, what else the api can returns 500.
 
+
+.env
+```env
+AWS_DEFAULT_REGION=
+AWS_ACCESS_KEY_ID=
+AWS_SECRET_ACCESS_KEY=
+```
+
+
 ---
 
 ### Unit Tests and TDD
