@@ -28,7 +28,7 @@ class TestUpdateShortUrlView(ShortUrlViewConfTest):
         )
 
         self.assertEqual(
-            status.HTTP_201_CREATED,
+            status.HTTP_200_OK,
             response.status_code,
         )
         self.assertEqual(

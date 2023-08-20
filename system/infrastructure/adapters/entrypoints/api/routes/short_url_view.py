@@ -46,16 +46,18 @@ class ShortUrlView:
             response_model_exclude_unset=True,
             response_model_exclude_none=True,
             methods=["POST"],
+            description="Create Short Url",
         )
 
         self.router.add_api_route(
             "/admin/{short_url}",
             self.update_short_url,
-            status_code=status.HTTP_201_CREATED,
+            status_code=status.HTTP_200_OK,
             response_model=ViewShortUrlResponse,
             response_model_exclude_unset=True,
             response_model_exclude_none=True,
             methods=["PATCH"],
+            description="Update Short Url",
         )
 
         self.router.add_api_route(
@@ -63,6 +65,7 @@ class ShortUrlView:
             self.redirect_short_url,
             status_code=status.HTTP_307_TEMPORARY_REDIRECT,
             methods=["GET"],
+            description="Redirect to Targe Url given a enable short url",
         )
 
     async def create_short_url(
