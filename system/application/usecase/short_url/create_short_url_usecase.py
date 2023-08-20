@@ -1,4 +1,3 @@
-import random
 from datetime import datetime
 from time import time
 from typing import Type
@@ -43,8 +42,5 @@ class CreateShortUrlUseCase(
         return ShortUrlResponse.model_validate(save_url_entity)
 
     def _create_short_url(self) -> str:
-        hex_time = hex(int(time()))
-
-        hex_list = list(hex_time)
-
-        return "".join(random.sample(hex_list, len(hex_list)))
+        now_timestamp = int(time() * 10e7)
+        return hex(now_timestamp)

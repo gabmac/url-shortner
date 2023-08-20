@@ -1,4 +1,3 @@
-import random
 from unittest.mock import patch
 
 from tests.conftest import BaseviewConfTest
@@ -50,15 +49,5 @@ class ShortUrlViewConfTest(BaseShortUrlConfTest, BaseviewConfTest):
         cls.url_query = cls.fastapi_app.url_path_for("query_short_url")
         cls.url_update = "/api/short/admin"
         cls.url_redirect = "/api/short"
-
-        cls.patch_random = patch.object(
-            random,
-            "sample",
-        )
-        cls.patch_random.start()
-
-        cls.patch_random.target.sample.return_value = [
-            cls.short_url_dto_fixture.entity.short_url,
-        ]
 
         super().setUpClass()

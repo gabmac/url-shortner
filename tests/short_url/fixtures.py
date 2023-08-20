@@ -14,7 +14,7 @@ class ShortUrlEntityFixtures:
     def __init__(
         self,
         target_url: str = "https://twitter.com/home",
-        short_url: str = "x24eb5601f",
+        short_url: str = "0x254478db0b28000",
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url
@@ -41,7 +41,7 @@ class ShortUrlModelFixture:
     def __init__(
         self,
         target_url: str = "https://twitter.com/home",
-        short_url: str = "x24eb5601f",
+        short_url: str = "0x254478db0b28000",
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url
@@ -69,7 +69,7 @@ class ShortRequestDTOFixture:
     def __init__(
         self,
         target_url: str = "https://twitter.com/home",
-        short_url: str = "x24eb5601f",
+        short_url: str = "0x254478db0b28000",
     ) -> None:
         self.target_url = target_url
         self.short_url = short_url
