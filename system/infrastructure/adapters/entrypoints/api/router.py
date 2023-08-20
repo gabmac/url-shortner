@@ -3,6 +3,9 @@ from fastapi.routing import APIRouter
 from system.application.usecase.short_url.create_short_url_usecase import (
     CreateShortUrlUseCase,
 )
+from system.application.usecase.short_url.query_short_url_usecase import (
+    QueryShortUrlUseCase,
+)
 from system.application.usecase.short_url.redirect_short_url_usecase import (
     RedirectQueryShortUrlUseCase,
 )
@@ -20,6 +23,7 @@ short = ShortUrlView(
     redirect_use_case=RedirectQueryShortUrlUseCase,
     create_use_case=CreateShortUrlUseCase,
     update_use_case=UpdateShortUrlUseCase,
+    query_use_case=QueryShortUrlUseCase,
 )
 
 api_router.include_router(short.router)

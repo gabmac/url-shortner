@@ -33,7 +33,7 @@ class TestRedirectShortUrlView(ShortUrlViewConfTest):
             payload=self.short_url_dto_fixture.entity.mock_short_url_enable_entity.short_url,
         )
 
-    async def test_update_short_url_not_found(self) -> None:
+    async def test_redirect_short_url_not_found(self) -> None:
         self.patch_short_redirect_usecase.target.execute.return_value = None
         self.patch_short_redirect_usecase.target.execute.side_effect = (
             NoURLWasFoundError()
