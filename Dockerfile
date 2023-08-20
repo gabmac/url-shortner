@@ -20,7 +20,5 @@ COPY pyproject.toml /code
 COPY system code/
 
 # Exports poetry dependencies to a requirements.txt file
-RUN poetry install --only main
-
-# Install dependecies
-RUN pip install debugpy
+ARG INSTALL_COMMAND
+RUN $INSTALL_COMMAND

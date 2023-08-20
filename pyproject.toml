@@ -31,6 +31,10 @@ conventional-pre-commit = "^2.3.0"
 freezegun = "^1.2.2"
 httpx = "^0.24.1"
 
+
+[tool.poetry.group.debugpy.dependencies]
+debugpy = "^1.6.7.post1"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.system.infrastructure.adapters.entrypoints.api"
