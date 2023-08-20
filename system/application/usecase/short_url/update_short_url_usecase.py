@@ -2,6 +2,9 @@ from typing import Type
 
 from system.application.dto.api.requests.url_request import UpdateShortUrlDTO
 from system.application.dto.api.response.url_response import ShortUrlResponse
+from system.application.usecase.short_url.basic_behavior_usecase import (
+    HTTPPrefixNeededUseCase,
+)
 from system.application.usecase.short_url.exceptions.create_short_url_exception import (
     NoURLWasFoundError,
 )
@@ -12,7 +15,10 @@ from system.infrastructure.adapters.database.repositories.short_url_repository i
 from system.infrastructure.settings.container import Container
 
 
-class UpdateShortUrlUseCase(RequestUseCase[UpdateShortUrlDTO, ShortUrlResponse]):
+class UpdateShortUrlUseCase(
+    RequestUseCase[UpdateShortUrlDTO, ShortUrlResponse],
+    HTTPPrefixNeededUseCase,
+):
     def __init__(
         self,
         short_url_repository: Type[ShortUrlRepository] = Container.short_url_repository,
@@ -32,7 +38,7 @@ class UpdateShortUrlUseCase(RequestUseCase[UpdateShortUrlDTO, ShortUrlResponse])
             if payload.status is not None:
                 short_url.status = payload.status
             if payload.target_url is not None:
-                short_url.target_url = payload.target_url
+                short_url.target_url = self._https_prefix(target_url=payload.target_url)
 
         except IndexError:
             raise NoURLWasFoundError()

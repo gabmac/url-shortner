@@ -99,6 +99,29 @@ class TestUpdateShortUrlUseCase(ShortUrlUseCaseConfTest):
             short_url_entity=self.short_url_dto_fixture_change_target.entity.mock_short_url_enable_entity,
         )
 
+    async def test_update_short_url_without_prefix(self) -> None:
+        self.patch_short_use_case_repository.target.upsert.return_value = (
+            self.short_url_dto_fixture.entity.mock_short_url_enable_entity
+        )
+        self.assertEqual(
+            UpdateShortUrlUseCase().execute(
+                payload=UpdateShortUrlDTO(
+                    target_url=self.short_url_dto_fixture.mock_create_request_without_prefix.target_url,
+                    short_url=self.short_url_dto_fixture_change_target.entity.mock_short_url_enable_entity.short_url,
+                ),
+            ),
+            self.short_url_dto_fixture.mock_create_enable_response,
+        )
+
+        self.patch_short_use_case_repository.target.query.assert_called_once_with(
+            hash_key="ROUTE",
+            range_key=self.short_url_dto_fixture_change_target.entity.mock_short_url_enable_entity.short_url,
+        )
+
+        self.patch_short_use_case_repository.target.upsert.assert_called_once_with(
+            short_url_entity=self.short_url_dto_fixture.entity.mock_short_url_enable_entity,
+        )
+
     async def test_update_non_existent_short_url(self) -> None:
         self.patch_short_use_case_repository.target.query.return_value = []
         short_url = "234567f"

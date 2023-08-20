@@ -5,6 +5,9 @@ from typing import Type
 
 from system.application.dto.api.requests.url_request import NewShortUrlRequest
 from system.application.dto.api.response.url_response import ShortUrlResponse
+from system.application.usecase.short_url.basic_behavior_usecase import (
+    HTTPPrefixNeededUseCase,
+)
 from system.domain.entities.url_entity import ShortenedUrlEntity
 from system.domain.enums.short_url_enum import ShortUrlStatusEnum
 from system.domain.ports.repositories.use_case_port import RequestUseCase
@@ -14,7 +17,10 @@ from system.infrastructure.adapters.database.repositories.short_url_repository i
 from system.infrastructure.settings.container import Container
 
 
-class CreateShortUrlUseCase(RequestUseCase[NewShortUrlRequest, ShortUrlResponse]):
+class CreateShortUrlUseCase(
+    RequestUseCase[NewShortUrlRequest, ShortUrlResponse],
+    HTTPPrefixNeededUseCase,
+):
     def __init__(
         self,
         short_url_repository: Type[ShortUrlRepository] = Container.short_url_repository,
@@ -42,11 +48,3 @@ class CreateShortUrlUseCase(RequestUseCase[NewShortUrlRequest, ShortUrlResponse]
         hex_list = list(hex_time)
 
         return "".join(random.sample(hex_list, len(hex_list)))
-
-    def _https_prefix(self, target_url: str) -> str:
-        if not (
-            target_url.startswith(r"https://") or target_url.startswith(r"http://")
-        ):
-            target_url = rf"https://{target_url}"
-
-        return target_url
