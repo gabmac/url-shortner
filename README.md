@@ -348,30 +348,19 @@ Docker image again. It should only be done during development.
 For production, you should build the Docker image with a recent version of the
 backend code, but during development, it allows you to make changes very fast.
 
-The following commands allows you to get inside your running container and execute
-commands inside, for example a Python interpreter to test installed dependencies, or
-start the development server that reloads when it detects changes.
-
-To get inside the container with a `bash` session, you can start the stack with:
+To initialize the application, fist you need it to build:
 
 ```bash
-$ docker compose up -d
+$ docker compose -f docker-compose.dev.yml build
 ```
 
-and then `exec` inside the running container:
+Then run:
 
 ```bash
-$ docker compose exec <service> bash
+$ docker compose -f docker-compose.dev.yml up
 ```
 
-You should see an output like:
-
-```console
-root@7f2607af31c3:/app#
-```
-
-that means that you are in a `bash` session inside your container, as a `root` user,
-under the `/code` directory.
+Be sure that OpenSearch Node is up, what else the api can returns 500:
 
 ---
 

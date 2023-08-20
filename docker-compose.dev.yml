@@ -81,45 +81,25 @@ services:
     networks:
     - os-net
 
-  # opensearch-logstash:
-  #   image: opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.2
-  #   container_name: opensearch-logstash
-  #   stdin_open: true
-  #   tty: true
-  #   command:
-  #     - "-e"
-  #     - |
-  #       input {
-  #         stdin {}
-  #       }
-  #       output {
-  #         opensearch {
-  #           hosts => ["https://opensearch-node1:9200"]
-  #           index => "opensearch-logstash-docker-%{+YYYY.MM.dd}"
-  #           user => "admin"
-  #           password => "admin"
-  #           ssl => true
-  #           ssl_certificate_verification => false
-  #         }
-  #       }
-
-  #   # volumes:
-  #   #   - /mnt/c/Users/Gabriel/Documents/meli-challenge/url-shortne/logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,z
-  #   #   - /mnt/c/Users/Gabriel/Documents/meli-challenge/url-shortne/logstash/pipeline:/usr/share/logstash/pipeline:ro,z
-  #   environment:
-  #     - 'LS_JAVA_OPTS=-Xmx256m -Xms256m'
-  #     - 'OPENSEARCH_HOSTS=["http://opensearch-node1:9200"]'
-  #   ports:
-  #     - "5044:5044"
-  #     - "5000:5000/tcp"
-  #     - "5000:5000/udp"
-  #     - "8080:8080/tcp"
-  #   expose:
-  #   - "5000"
-  #   networks:
-  #     - os-net
-  #   depends_on:
-  #     - opensearch-node1
+  opensearch-logstash:
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.2
+    container_name: opensearch-logstash
+    volumes:
+    - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
+    - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    ports:
+    - 5044:5044
+    - 50000:50000/tcp
+    - 50000:50000/udp
+    - 9600:9600
+    environment:
+      LS_JAVA_OPTS: -Xms256m -Xmx256m
+      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+    networks:
+    - os-net
+    depends_on:
+    - opensearch-node1
+    restart: unless-stopped
 
 
 
