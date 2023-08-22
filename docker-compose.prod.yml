@@ -1,0 +1,16 @@
+version: '2.2'
+
+services:
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: test
+    image: short-url:${TESTE_VERSION:-latest}
+    volumes:
+    - .:/code
+    ports:
+    - "9000:9000"
+    - "5678:5678"
