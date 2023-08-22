@@ -121,7 +121,6 @@ In this Entity we have all data that represents the Shortened Url
 
 ### **Infrastructure Discussion**
 
-![Alt text](./controllers_brief.svg)
 <img src="./infrastructure.drawio.svg">
 
 #### **Database Discussion**
@@ -208,6 +207,12 @@ With we want to monitoring metrics as CPU and memory too besides logs, we can us
 #### Load Balancer
 
 Load balancers distribute incoming client requests to computing resources such as application servers and databases. In each case, the load balancer returns the response from the computing resource to the appropriate client.
+
+Uptime=99.99%
+
+#### Api Gateway
+
+API Gateway handles all the tasks involved in accepting and processing up to hundreds of thousands of concurrent API calls, including traffic management, CORS support, authorization and access control, throttling, monitoring, and API version management
 
 Uptime=99.99%
 
@@ -348,7 +353,7 @@ Docker image again. It should only be done during development.
 For production, you should build the Docker image with a recent version of the
 backend code, but during development, it allows you to make changes very fast.
 
-To initialize the application, fist you need it to build:
+To initialize the application, first you need it to build:
 
 ```bash
 $ docker compose -f docker-compose.dev.yml build
