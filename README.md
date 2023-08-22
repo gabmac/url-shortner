@@ -121,7 +121,7 @@ In this Entity we have all data that represents the Shortened Url
 
 ### **Infrastructure Discussion**
 
-<img src="./infrastructure.drawio.svg">
+<img src="./infrastructure.svg">
 
 #### **Database Discussion**
 
@@ -207,12 +207,6 @@ With we want to monitoring metrics as CPU and memory too besides logs, we can us
 #### Load Balancer
 
 Load balancers distribute incoming client requests to computing resources such as application servers and databases. In each case, the load balancer returns the response from the computing resource to the appropriate client.
-
-Uptime=99.99%
-
-#### Api Gateway
-
-API Gateway handles all the tasks involved in accepting and processing up to hundreds of thousands of concurrent API calls, including traffic management, CORS support, authorization and access control, throttling, monitoring, and API version management
 
 Uptime=99.99%
 
