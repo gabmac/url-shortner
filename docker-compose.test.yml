@@ -1,0 +1,35 @@
+version: '2.2'
+
+services:
+
+  dynamodb-local:
+    container_name: dynamodb
+    command: "-jar DynamoDBLocal.jar -sharedDb -inMemory ./data -port 8000"
+    image: "amazon/dynamodb-local:latest"
+    ports:
+    - "8000:8000"
+    working_dir: /home/dynamodblocal
+
+
+  api:
+    container_name: api
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      target: test
+    image: short-url-test:${TESTE_VERSION:-latest}
+    volumes:
+    - .:/code
+    env_file:
+    - .env
+    ports:
+    - "9000:9000"
+    - "5678:5678"
+    environment:
+    - ENDPOINT_URL=http://dynamodb-local:8000
+    - ENVIRONMENT=local
+    - ELASTICSEARCH_HOST=opensearch-node1
+    - ELASTICSEARCH_INDEX=short-url
+    - ELASTICSEARCH_ACTIVE=false
+    depends_on:
+    - dynamodb-local

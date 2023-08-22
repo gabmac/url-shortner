@@ -1,6 +1,6 @@
 import logging
 
-from logstash import TCPLogstashHandler
+from logstash.handler_tcp import TCPLogstashHandler
 
 from system.infrastructure.settings.config import Config
 

@@ -17,11 +17,7 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
-      args:
-      # - INSTALL_COMMAND=poetry install --without code-smells,dev
-      - INSTALL_COMMAND=poetry install --only main
-    # command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m system"]
-    command: ["sh", "-c", "python -m system"]
+      target: local
     image: short-url:${TESTE_VERSION:-latest}
     restart: always
     volumes:
