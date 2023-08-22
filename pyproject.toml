@@ -13,6 +13,7 @@ boto3 = "^1.28.29"
 fastapi = "^0.101.1"
 uvicorn = "^0.23.2"
 opensearch-py = "^2.3.0"
+python-logstash = "^0.4.8"
 
 
 [tool.poetry.group.code-smells.dependencies]

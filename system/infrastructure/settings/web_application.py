@@ -1,9 +1,10 @@
 """Application Settings"""
-from typing import Any, Awaitable, Callable, Coroutine, List
+from typing import Any, Awaitable, Callable, Coroutine, List, Type
 
 from fastapi import FastAPI, HTTPException, Request, status
 from fastapi.middleware.cors import CORSMiddleware
 
+from system.infrastructure.adapters.elastic.logstash import LogStash
 from system.infrastructure.adapters.entrypoints.api.router import api_router
 from system.infrastructure.cross_cutting.middleware_context import (
     RequestContextsMiddleware,
@@ -21,6 +22,7 @@ class AppConfig:
     def __init__(
         self,
         init_applications: List[Callable[[Any], Any]],
+        logstash: Type[LogStash] = LogStash,
     ):
         self.init_applications = init_applications
         self.app = FastAPI(
@@ -30,6 +32,7 @@ class AppConfig:
             docs_url="/docs",
             redoc_url="/redoc",
         )
+        self.logstash = logstash()
 
         self.app.on_event("startup")(self.startup(self.init_applications, self.app))
         self.app.add_exception_handler(
@@ -85,12 +88,16 @@ class AppConfig:
         """Intialize Routes"""
         self.app.include_router(api_router, prefix="/api")
 
+    def init_logstash(self) -> None:
+        self.logstash.logstash_init()
+
     def start_application(self) -> FastAPI:
         """Start Application with Environment"""
         self.init_context()
         self.init_request_log()
         self.init_cors()
         self.init_routes()
+        self.init_logstash()
         return self.app
 
 

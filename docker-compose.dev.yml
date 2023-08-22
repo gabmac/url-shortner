@@ -3,6 +3,7 @@ version: '2.2'
 services:
 
   dynamodb-local:
+    container_name: dynamodb
     command: "-jar DynamoDBLocal.jar -sharedDb -inMemory ./data -port 8000"
     image: "amazon/dynamodb-local:latest"
     ports:
@@ -12,6 +13,7 @@ services:
     - os-net
 
   api:
+    container_name: api
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -20,7 +22,7 @@ services:
       - INSTALL_COMMAND=poetry install --only main
     # command: ["sh", "-c", "python -m debugpy --wait-for-client --listen 0.0.0.0:5678 -m system"]
     command: ["sh", "-c", "python -m system"]
-    image: teste:${TESTE_VERSION:-latest}
+    image: short-url:${TESTE_VERSION:-latest}
     restart: always
     volumes:
     - .:/code
@@ -34,12 +36,15 @@ services:
     - ENVIRONMENT=local
     - ELASTICSEARCH_HOST=opensearch-node1
     - ELASTICSEARCH_INDEX=short-url
-    - ELASTICSEARCH_ACTIVE=true
+    - ELASTICSEARCH_ACTIVE=false
+    - LOGSTASH_HOST=opensearch-logstash
+    - LOGSTASH_PORT=5000
     networks:
     - os-net
     depends_on:
     - opensearch-node1
     - dynamodb-local
+    - opensearch-logstash
 
 
   opensearch-node1:
@@ -47,7 +52,8 @@ services:
     container_name: opensearch-node1
     environment:
     - cluster.name=opensearch-cluster
-    - node.name=opensearch-node-operations
+    - node.name=opensearch-node1
+    - discovery.seed_hosts=opensearch-node1
     - bootstrap.memory_lock=true   # along with the memlock settings below, disables swapping
     - "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"   # minimum and maximum Java heap size, recommend setting both to 50% of system RAM
     - "DISABLE_INSTALL_DEMO_CONFIG=true"   # disables execution of install_demo_configuration.sh bundled with security plugin, which installs demo certificates and security configurations to OpenSearch
@@ -64,7 +70,7 @@ services:
     # - opensearch-data1:/usr/share/opensearch/data
     ports:
     - 9200:9200
-    - 9600:9600   # required for Performance Analyzer
+    - 9600:9600
     networks:
     - os-net
 
@@ -82,26 +88,20 @@ services:
     - os-net
 
   opensearch-logstash:
-    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:7.16.2
-    container_name: opensearch-logstash
-    volumes:
-    - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml:ro,Z
-    - ./logstash/pipeline:/usr/share/logstash/pipeline:ro,Z
+    image: opensearchproject/logstash-oss-with-opensearch-output-plugin:latest
+    container_name: logstash
     ports:
     - 5044:5044
-    - 50000:50000/tcp
-    - 50000:50000/udp
-    - 9600:9600
-    environment:
-      LS_JAVA_OPTS: -Xms256m -Xmx256m
-      LOGSTASH_INTERNAL_PASSWORD: ${LOGSTASH_INTERNAL_PASSWORD:-}
+    - 5099:5099
+    - 5000:5000/tcp
+    - 5000:5000/udp
+    - 8080:8080
+    volumes:
+    - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     networks:
     - os-net
     depends_on:
     - opensearch-node1
-    restart: unless-stopped
-
-
 
 volumes:
   opensearch-data1:

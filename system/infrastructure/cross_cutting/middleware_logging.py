@@ -78,10 +78,11 @@ class RequestContextLogMiddleware(BaseHTTPMiddleware):
         }
 
         if self.elastic is not None:
+            document["@timestamp"] = datetime.utcnow().isoformat()
             self.elastic.create_document(document_dict=document)
 
-        logger = logging.getLogger("short-url")
-        logger.info(document)
+        logger = logging.getLogger(Config.APPLICATION_NAME)
+        logger.info("Incoming Request", extra=document)
 
         return Response(
             content=response_body,  # type: ignore

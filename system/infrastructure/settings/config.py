@@ -26,6 +26,13 @@ class ElasticSearchConfig:
     ACTIVE = os.getenv("ELASTICSEARCH_ACTIVE", "false") == "true"
 
 
+class LogStash:
+    APP_NAME = os.getenv("APPLICATION_NAME", __name__)
+    LOGSTASH_HOST = os.getenv("LOGSTASH_HOST", "localhost")
+    LOGSTASH_PORT = int(os.getenv("LOGSTASH_PORT", 5959))
+    DATABASE_PATH = os.getenv("LOGSTASH_DB_PATH")
+
+
 class Logger:
     CONFIG = {
         "version": 1,
@@ -56,3 +63,5 @@ class Config:
     ENVIRONMENT = Environments(os.getenv("ENVIRONMENT", "local")).value
     LOGGER = Logger
     ELASTIC = ElasticSearchConfig
+    LOG_STASH = LogStash
+    APPLICATION_NAME = os.getenv("APPLICATION_NAME", "short-url")
