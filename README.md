@@ -40,7 +40,7 @@ Using Gherkin for acceptance tests ensures that the tests are easily readable an
     - **Because** I don't want them to expire automatically.
 <br>
 
-1. **URL Configuration**
+2. **URL Configuration**
    - **As a** system administrator,
    - **I want** to enable or disable published URLs,
    - **Because** I need control over the accessibility of my content.
@@ -49,7 +49,7 @@ Using Gherkin for acceptance tests ensures that the tests are easily readable an
    - **Because** the content I'm promoting might change.
 <br>
 
-1. **URL Redirect**
+3. **URL Redirect**
    - **As a** user,
    - **I want** to click on url and be redirect
    - **Because** I want to see the promotion on Twitter
@@ -412,6 +412,13 @@ To generate HTML report runs:
 
 ```bash
 $ poetry run coverage html
+```
+
+You can use `docker compose` to run tests too:
+
+```bash
+$ docker compose -f docker-compose.test.yml build
+$ docker compose -f docker-compose.test.yml up
 ```
 ---
 
