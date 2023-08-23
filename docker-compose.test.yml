@@ -22,9 +22,6 @@ services:
     - .:/code
     env_file:
     - .env
-    ports:
-    - "9000:9000"
-    - "5678:5678"
     environment:
     - ENDPOINT_URL=http://dynamodb-local:8000
     - ENVIRONMENT=local

@@ -125,6 +125,15 @@ It's import to point out that a *Multi-AZ infrastructure* would give more resili
 
 <img src="./infrastructure.svg">
 
+##### *Short Description*
+
+
+  1. Incoming requests are first received by an Elastic Load Balancer (ELB).
+  2. The ELB routes the requests to an ECS cluster, which is hosted on EC2 instances.Both the ECS cluster and the EC2 instances have auto-scaling rules in place to dynamically adjust capacity based on demand.
+  3. The ECS tasks, responsible for processing the requests, run containerized applications. The container images for these tasks are stored in and pulled from Amazon Elastic Container Registry (ECR).
+  4. The application uses Amazon DynamoDB as its primary database.
+  5. Application request logs are forwarded to an OpenSearch cluster using Logstash.
+  6. DataDog is employed to monitor and manage both application and infrastructure metrics.
 #### **Database Discussion**
 
 **CAP Theorem**
@@ -426,6 +435,21 @@ You can use `docker compose` to run tests too:
 $ docker compose -f docker-compose.test.yml build
 $ docker compose -f docker-compose.test.yml up
 ```
+
+***Report***
+
+
+|Name|Stmts|Miss|Branch|BrPart|Cover|
+|---|---|---|---|---|---|
+| system/infrastructure/adapters/entrypoints/api/routes/short_url_view.py|36|0|0|0|100%|
+| system/infrastructure/adapters/database/repositories/short_url_repository.py|16|0|2|0|100%|
+| system/application/usecase/short_url/update_short_url_usecase.py|21|0|4|0|100%|
+| system/application/usecase/short_url/redirect_short_url_usecase.py|16|0|0|0|100%|
+| system/application/usecase/short_url/query_short_url_usecase.py|11|0|2|0|100%|
+| system/application/usecase/short_url/create_short_url_usecase.py|21|0|0|0|100%|
+| system/application/usecase/short_url/basic_behavior_usecase.py|5|0|2|0|100%|
+| TOTAL|126|0|10|0|100%
+
 ---
 
 ## Clean Architecture
