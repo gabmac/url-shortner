@@ -1,4 +1,3 @@
-import os
 from unittest import IsolatedAsyncioTestCase
 from unittest.mock import patch
 
@@ -13,13 +12,6 @@ from system.infrastructure.settings.web_application import app
 class BaseConfTest(IsolatedAsyncioTestCase):
     @classmethod
     def setUpClass(cls) -> None:
-        os.environ["DATABASE_TABLE"] = "shorturl"
-        os.environ["ENVIRONMENT"] = "local"
-        os.environ["ENDPOINT_URL"] = os.getenv("ENDPOINT_URL", "http://localhost:8000")
-        os.environ["AWS_ACCESS_KEY_ID"] = "teste"
-        os.environ["AWS_SECRET_ACCESS_KEY"] = "teste"
-        os.environ["AWS_SESSION_TOKEN"] = "teste"
-        os.environ["AWS_DEFAULT_REGION"] = "sa-east-1"
         cls.addClassCleanup(patch.stopall)
 
         super().setUpClass()
@@ -41,7 +33,7 @@ class BaseUseCaseConfTest(BaseConfTest):
     pass
 
 
-class BaseviewConfTest(BaseConfTest):
+class BaseViewConfTest(BaseConfTest):
     fastapi_app = app
 
     @property

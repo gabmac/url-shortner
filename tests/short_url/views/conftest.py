@@ -1,6 +1,6 @@
 from unittest.mock import patch
 
-from tests.conftest import BaseviewConfTest
+from tests.conftest import BaseViewConfTest
 from tests.short_url.conftest import BaseShortUrlConfTest
 from tests.short_url.fixtures import ShortRequestDTOFixture
 
@@ -18,7 +18,7 @@ from system.application.usecase.short_url.update_short_url_usecase import (
 )
 
 
-class ShortUrlViewConfTest(BaseShortUrlConfTest, BaseviewConfTest):
+class ShortUrlViewConfTest(BaseShortUrlConfTest, BaseViewConfTest):
     @classmethod
     def setUpClass(cls) -> None:
         cls.short_url_dto_fixture = ShortRequestDTOFixture()
