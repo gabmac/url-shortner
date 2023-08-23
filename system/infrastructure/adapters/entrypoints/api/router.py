@@ -13,17 +13,37 @@ from system.application.usecase.short_url.update_short_url_usecase import (
     UpdateShortUrlUseCase,
 )
 from system.infrastructure.adapters.entrypoints.api import monitoring
-from system.infrastructure.adapters.entrypoints.api.routes.short_url_view import (
-    ShortUrlView,
+from system.infrastructure.adapters.entrypoints.api.routes.admin.create_short_url_view import (
+    CreateUrlView,
+)
+from system.infrastructure.adapters.entrypoints.api.routes.admin.query_short_url_view import (
+    QueryUrlView,
+)
+from system.infrastructure.adapters.entrypoints.api.routes.admin.update_short_url_view import (
+    UpdateUrlView,
+)
+from system.infrastructure.adapters.entrypoints.api.routes.short_url.redirect_short_url import (
+    RedirectUrlView,
 )
 
-api_router = APIRouter()
+api_router = APIRouter(prefix="/api")
 api_router.include_router(monitoring.router)
-short = ShortUrlView(
+
+redirect = RedirectUrlView(
     redirect_use_case=RedirectQueryShortUrlUseCase,
-    create_use_case=CreateShortUrlUseCase,
+)
+update = UpdateUrlView(
     update_use_case=UpdateShortUrlUseCase,
+)
+query = QueryUrlView(
     query_use_case=QueryShortUrlUseCase,
 )
 
-api_router.include_router(short.router)
+create = CreateUrlView(
+    create_use_case=CreateShortUrlUseCase,
+)
+
+api_router.include_router(redirect.router)  # type: ignore[arg-type]
+api_router.include_router(update.router)  # type: ignore[arg-type]
+api_router.include_router(query.router)  # type: ignore[arg-type]
+api_router.include_router(create.router)  # type: ignore[arg-type]

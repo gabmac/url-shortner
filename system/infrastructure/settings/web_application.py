@@ -86,7 +86,7 @@ class AppConfig:
 
     def init_routes(self) -> None:
         """Intialize Routes"""
-        self.app.include_router(api_router, prefix="/api")
+        self.app.include_router(api_router)
 
     def init_logstash(self) -> None:
         self.logstash.logstash_init()

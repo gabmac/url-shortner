@@ -121,9 +121,10 @@ In this Entity we have all data that represents the Shortened Url
 
 |Endpoint|HTTP Verb|Action|
 |---|---|---|
-|/create|POST|Create a Short URL|
-|/{url_key}|GET|Fowards to target URL|
+|admin/create|POST|Create a Short URL|
+|/admin|GET|List All Short URLs|
 |/admin/{url_key}|PATCH|Update target URL|
+|/{url_key}|GET|Fowards to target URL|
 |/docs|GET|Swagger|
 
 ---
@@ -450,14 +451,20 @@ $ docker compose -f docker-compose.test.yml up
 
 |Name|Stmts|Miss|Branch|BrPart|Cover|
 |---|---|---|---|---|---|
-| system/infrastructure/adapters/entrypoints/api/routes/short_url_view.py|36|0|0|0|100%|
-| system/infrastructure/adapters/database/repositories/short_url_repository.py|16|0|2|0|100%|
-| system/application/usecase/short_url/update_short_url_usecase.py|21|0|4|0|100%|
-| system/application/usecase/short_url/redirect_short_url_usecase.py|16|0|0|0|100%|
-| system/application/usecase/short_url/query_short_url_usecase.py|11|0|2|0|100%|
-| system/application/usecase/short_url/create_short_url_usecase.py|21|0|0|0|100%|
-| system/application/usecase/short_url/basic_behavior_usecase.py|5|0|2|0|100%|
-| TOTAL|126|0|10|0|100%
+|system/infrastructure/adapters/entrypoints/api/routes/short_url/redirect_short_url.py|23|0|0|0|100%|
+|system/infrastructure/adapters/entrypoints/api/routes/base_route.py|4|0|0|0|100%|
+|system/infrastructure/adapters/entrypoints/api/routes/admin/update_short_url_view.py|21|0|0|0|100%|
+|system/infrastructure/adapters/entrypoints/api/routes/admin/query_short_url_view.py|18|0|0|0|100%|
+|system/infrastructure/adapters/entrypoints/api/routes/admin/create_short_url_view.py|17|0|0|0|100%|
+|system/infrastructure/adapters/database/repositories/short_url_repository.py|16|0|2|0|100%|
+|system/application/usecase/short_url/update_short_url_usecase.py|21|0|4|0|100%|
+|system/application/usecase/short_url/redirect_short_url_usecase.py|16|0|0|0|100%|
+|system/application/usecase/short_url/query_short_url_usecase.py|11|0|2|0|100%|
+|system/application/usecase/short_url/create_short_url_usecase.py|21|0|0|0|100%|
+|system/application/usecase/short_url/basic_behavior_usecase.py|5|0|2|0|100%|
+|system/infrastructure/adapters/entrypoints/api/routes/admin/base_admin_short_url_view.py|15|0|2|1|94%|
+|system/infrastructure/adapters/entrypoints/api/routes/short_url/base_short_url_view.py|13|0|2|1|93%|
+|TOTAL|201|0|14|2|99%|
 
 ---
 

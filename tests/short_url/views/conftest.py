@@ -47,7 +47,7 @@ class ShortUrlViewConfTest(BaseShortUrlConfTest, BaseviewConfTest):
 
         cls.url_create = cls.fastapi_app.url_path_for("create_short_url")
         cls.url_query = cls.fastapi_app.url_path_for("query_short_url")
-        cls.url_update = "/api/short/admin"
+        cls.url_update = "/api/admin"
         cls.url_redirect = "/api/short"
 
         super().setUpClass()
