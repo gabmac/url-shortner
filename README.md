@@ -451,19 +451,19 @@ $ docker compose -f docker-compose.test.yml up
 
 |Name|Stmts|Miss|Branch|BrPart|Cover|
 |---|---|---|---|---|---|
-system/infrastructure/adapters/entrypoints/api/routes/base_route.py|4|0|0|0|100%
-system/infrastructure/adapters/database/repositories/short_url_repository.py|16|0|2|0|100%
-system/application/usecase/short_url/update_short_url_usecase.py|21|0|4|0|100%
-system/application/usecase/short_url/redirect_short_url_usecase.py|16|0|0|0|100%
-system/application/usecase/short_url/query_short_url_usecase.py|11|0|2|0|100%
-system/application/usecase/short_url/create_short_url_usecase.py|21|0|0|0|100%
-system/application/usecase/short_url/basic_behavior_usecase.py|5|0|2|0|100%
-system/infrastructure/adapters/entrypoints/api/routes/short_url/redirect_short_url.py|21|0|2|1|96%
-system/infrastructure/adapters/entrypoints/api/routes/admin/update_short_url_view.py|21|0|2|1|96%
-system/infrastructure/adapters/entrypoints/api/routes/admin/create_short_url_view.py|17|0|2|1|95%
-system/infrastructure/adapters/entrypoints/api/routes/admin/query_short_url_view.py|16|0|2|1|94%
-system/infrastructure/adapters/entrypoints/api/routes/short_url/base_short_url_view.py|7|0|2|1|89%
-system/infrastructure/adapters/entrypoints/api/routes/admin/base_admin_short_url_view.py|7|0|2|1|89%
+system/infrastructure/adapters/entrypoints/api/routes/base_route.py|4|0|0|0|100%|
+system/infrastructure/adapters/database/repositories/short_url_repository.py|16|0|2|0|100%|
+system/application/usecase/short_url/update_short_url_usecase.py|21|0|4|0|100%|
+system/application/usecase/short_url/redirect_short_url_usecase.py|16|0|0|0|100%|
+system/application/usecase/short_url/query_short_url_usecase.py|11|0|2|0|100%|
+system/application/usecase/short_url/create_short_url_usecase.py|21|0|0|0|100%|
+system/application/usecase/short_url/basic_behavior_usecase.py|5|0|2|0|100%|
+system/infrastructure/adapters/entrypoints/api/routes/short_url/redirect_short_url.py|21|0|2|1|96%|
+system/infrastructure/adapters/entrypoints/api/routes/admin/update_short_url_view.py|21|0|2|1|96%|
+system/infrastructure/adapters/entrypoints/api/routes/admin/create_short_url_view.py|17|0|2|1|95%|
+system/infrastructure/adapters/entrypoints/api/routes/admin/query_short_url_view.py|16|0|2|1|94%|
+system/infrastructure/adapters/entrypoints/api/routes/short_url/base_short_url_view.py|7|0|2|1|89%|
+system/infrastructure/adapters/entrypoints/api/routes/admin/base_admin_short_url_view.py|7|0|2|1|89%|
 |---|---|---|---|---|---|
 |TOTAL|183|0|22|6|97%|
 
