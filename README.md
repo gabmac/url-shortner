@@ -121,6 +121,8 @@ In this Entity we have all data that represents the Shortened Url
 
 ### **Infrastructure Discussion**
 
+It's import to point out that a *Multi-AZ infrastructure* would give more resiliency to the application, make the system robust in case of a disaster.
+
 <img src="./infrastructure.svg">
 
 #### **Database Discussion**
@@ -210,12 +212,17 @@ Load balancers distribute incoming client requests to computing resources such a
 
 Uptime=99.99%
 
-#### Deploy
+#### Host
 
-For Container Orchestration we can choose between  [Amazon Elastic Container Service(ECS)](https://aws.amazon.com/ecs/?pg=ln&sec=hiw) or [Amazon Elastic Kubernetes Service(EKS)](https://aws.amazon.com/eks/?pg=ln&sec=hiw). The one choosen is ECS.
-With ECS we are going to use [AWS Fargate](https://aws.amazon.com/fargate/?nc1=h_ls). AWS Fargate is a serverless, pay-as-you-go compute engine that lets you focus on building applications without managing servers.
+For Container Orchestration we can choose between  [Amazon Elastic Container Service(ECS)](https://aws.amazon.com/ecs/?pg=ln&sec=hiw) or [Amazon Elastic Kubernetes Service(EKS)](https://aws.amazon.com/eks/?pg=ln&sec=hiw). The one choosen is ECS. Amazon Elastic Container Service (Amazon ECS) is a fully managed container orchestration service that simplifies your deployment, management, and scaling of containerized applications. Simply describe your application and the resources required, and Amazon ECS will launch, monitor, and scale your application across flexible compute options with automatic integrations to other supporting AWS services that your application needs. Perform system operations such as creating custom scaling and capacity rules, and observe and query data from application logs and telemetry.
 
-We can use ECS on EC2 instead of AWS Fargate this can reduce the cost. But we would need to worry about EC2 Scaling.
+With ECS we can use?
+  1. [AWS Fargate](https://aws.amazon.com/fargate/?nc1=h_ls) is a serverless, pay-as-you-go compute engine that lets you focus on building applications without managing servers. A pitfall is that as a serverless applcation it can increase the cost.
+  2. We would use ECS with EC2, it would reduce the cost compared with Fargate, but we would need to pay attention in EC2 scalling.
+  3. Other option would be [EC2 Spot Instance](https://aws.amazon.com/pt/ec2/spot/) that could reduce significantly, but there is a average high frequency of interruption. So the application uptime wouldn't be respected.
+
+
+The chosen one is ECS+EC2.
 
 Uptime = 99.99%
 
