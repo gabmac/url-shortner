@@ -13,7 +13,7 @@ concurrency:
 jobs:
 
   release:
-    if: startsWith(github.ref_name, 'release/v')
+    # if: startsWith(github.ref_name, 'release/v')
     name: Create Release
     runs-on: ubuntu-latest
 
