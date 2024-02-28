@@ -101,3 +101,18 @@ repos:
     args:
     - "system"
     - --config=pyproject.toml
+
+  - id: bandit
+    name: Bandit validation
+    entry: bandit
+    language: system
+    types: [python]
+    args:
+    - -r
+    - system
+
+  - id: pip-audit
+    name: Pip Audit validation
+    entry: bash -c "poetry export --without-hashes | pip-audit --no-deps -r /dev/stdin"
+    language: system
+    types: [python]
