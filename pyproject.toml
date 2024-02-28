@@ -29,7 +29,7 @@ bandit = {extras = ["toml"], version = "^1.7.7"}
 
 
 [tool.poetry.group.dev.dependencies]
-coverage = "^7.3.0"
+coverage = {extras = ["toml"], version = "^7.4.3"}
 conventional-pre-commit = "^2.3.0"
 freezegun = "^1.2.2"
 httpx = "^0.24.1"
