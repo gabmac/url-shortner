@@ -69,4 +69,3 @@ jobs:
       run: |
         poetry run coverage run -m unittest -v
         poetry run coverage report
-        poetry run coverage-badge -o .badges/coverage/coverage.svg -f
