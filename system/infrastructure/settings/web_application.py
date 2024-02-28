@@ -1,7 +1,7 @@
 """Application Settings"""
-from typing import Any, Awaitable, Callable, Coroutine, List, Type
+from typing import Any, Awaitable, Callable, List, Type
 
-from fastapi import FastAPI, HTTPException, Request, status
+from fastapi import FastAPI, HTTPException, Request, Response, WebSocket, status
 from fastapi.middleware.cors import CORSMiddleware
 
 from system.infrastructure.adapters.elastic.logstash import LogStash
@@ -37,21 +37,24 @@ class AppConfig:
         self.app.on_event("startup")(self.startup(self.init_applications, self.app))
         self.app.add_exception_handler(
             exc_class_or_status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
-            handler=self.exception_handler,
+            handler=self.exception_handler,  # type: ignore[arg-type]
         )
 
     @staticmethod
     def startup(
         init_applications: List[Callable[[Any], Any]],
         app: FastAPI,
-    ) -> Callable[[], Coroutine[Any, Any, None]]:
+    ) -> (
+        Callable[[Request, Exception], Response | Awaitable[Response]]
+        | Callable[[WebSocket, Exception], Awaitable[None]]
+    ):
         """Startup Application"""
 
         async def _startup() -> None:
             for application in init_applications:
                 application(app)
 
-        return _startup
+        return _startup  # type: ignore[return-value]
 
     def init_cors(self) -> None:
         """Initialize CORS"""
