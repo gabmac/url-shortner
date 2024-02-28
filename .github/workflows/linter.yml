@@ -56,8 +56,8 @@ jobs:
 
     - name: Bandit Runnintg
       run: >
-        bandit -r system
+        poetry run bandit -r system
 
     - name: Pip Audit
       run: >
-        poetry export --without-hashes | pip-audit --no-deps -r /dev/stdin
+        poetry export --without-hashes | poetry run pip-audit --no-deps -r /dev/stdin
