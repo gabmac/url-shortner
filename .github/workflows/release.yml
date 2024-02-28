@@ -92,7 +92,6 @@ jobs:
         draft: true
         prerelease: false
         commitish: ${{github.ref_name }}
-        permissions: write-all
         body: |
           ## Info
           Branch ${{ github.ref }}
