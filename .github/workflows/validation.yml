@@ -17,6 +17,7 @@ jobs:
     uses: ./.github/workflows/merge_main.yml
 
   update_package:
+    needs: [sync-branch]
     uses: ./.github/workflows/update_package.yml
 
   linter:
