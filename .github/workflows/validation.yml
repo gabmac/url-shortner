@@ -7,16 +7,11 @@ on:
 
 jobs:
 
-  add_label:
-    runs-on: ubuntu-latest
-    steps:
-    - name: checkout
-      uses: actions/checkout@v3
-
   sync-branch:
     uses: ./.github/workflows/merge_main.yml
 
   update_package:
+    needs: [sync-branch]
     uses: ./.github/workflows/update_package.yml
 
   linter:
