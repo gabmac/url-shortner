@@ -1,0 +1,17 @@
+name: Sync Main branch with release on PR
+on:
+  pull_request:
+
+jobs:
+  sync-branch:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+
+    - name: Merge main -> ${{ github.head_ref }}
+      uses: devmasx/merge-branch@master
+      with:
+        type: now
+        from_branch: main
+        target_branch: ${{ github.head_ref }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
