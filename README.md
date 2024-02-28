@@ -325,6 +325,8 @@ The main code smells are:
 5. **Pylint** - Code Analysis for Python
 6. **MyPy** - Static Typing for Python
 7. **[Conventional Commit](https://www.conventionalcommits.org/en/v1.0.0/)** - Force to use correct message for commit
+8. **Bandit** -  Designed to find common security issues in Python code
+9. **Pip Audit** - Tool for scanning Python environments for packages with known vulnerabilities
 
 To install you need to run:
 

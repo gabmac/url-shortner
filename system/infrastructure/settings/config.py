@@ -32,6 +32,9 @@ class LogStash:
     LOGSTASH_PORT = int(os.getenv("LOGSTASH_PORT", 5959))
     DATABASE_PATH = os.getenv("LOGSTASH_DB_PATH")
 
+class SERVER:
+    HOST = os.getenv("SERVER_HOST","0.0.0.0")
+    PORT = int(os.getenv("PORT", 9000))
 
 class Logger:
     CONFIG = {
@@ -65,3 +68,4 @@ class Config:
     ELASTIC = ElasticSearchConfig
     LOG_STASH = LogStash
     APPLICATION_NAME = os.getenv("APPLICATION_NAME", "short-url")
+    SERVER = SERVER

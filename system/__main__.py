@@ -20,8 +20,8 @@ def api() -> None:
 
     uvicorn.run(
         "system.infrastructure.settings.web_application:app",
-        host="0.0.0.0",
-        port=9000,
+        host=Config.SERVER.HOST,
+        port=Config.SERVER.PORT,
         reload=reload,
         factory=False,
         log_level=log_level,
