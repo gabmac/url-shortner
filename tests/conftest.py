@@ -47,7 +47,7 @@ class BaseViewConfTest(BaseConfTest):
 
         test_client = TestClient(
             app=self.fastapi_app,
-            base_url="http://localhost:9857/api",
+            base_url="http://localhost:9857",
         )
 
         test_client.headers.update(

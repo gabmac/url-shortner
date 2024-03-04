@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
   workflow_call:
     outputs:
-        changes:
-          value: ${{ jobs.packages.outputs.changes }}
-          description: "Get changes in some file"
+      changes:
+        value: ${{ jobs.packages.outputs.changes }}
+        description: "Get changes in some file"
 
 
 jobs:

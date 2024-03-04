@@ -2,7 +2,7 @@ name: Sync Main branch with release on PR
 on:
   workflow_dispatch:
   workflow_call:
-  
+
 jobs:
   sync-branch:
     runs-on: ubuntu-latest

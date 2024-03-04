@@ -97,7 +97,7 @@ class AppConfig:
     def start_application(self) -> FastAPI:
         """Start Application with Environment"""
         self.init_context()
-        self.init_request_log()
+        # self.init_request_log()
         self.init_cors()
         self.init_routes()
         self.init_logstash()
