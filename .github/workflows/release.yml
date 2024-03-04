@@ -110,10 +110,14 @@ jobs:
           Changes: ${{steps.github_release.outputs.changes}}
           Commits: ${{steps.github_release.outputs.commits}}
 
-          ## Changelog
+          ## ChangeLog
+
+          ADD HERE CHANGES
+
+          ## Pull Requests Since Last Tag
           ${{steps.github_release.outputs.changelog}}
 
-          ## Commits
+          ## Last Commits Since Last Tag
           ${{ steps.change_commits.outputs.changelog }}
 
           ## How to Promote?
