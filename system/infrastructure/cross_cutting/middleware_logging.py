@@ -1,6 +1,6 @@
 import logging
 from datetime import datetime
-from typing import Any, Awaitable, Callable, Dict, Optional, Type, Union
+from typing import Any, Awaitable, Callable, Type
 
 from fastapi import Request, Response
 from starlette.middleware.base import BaseHTTPMiddleware, DispatchFunction
@@ -42,7 +42,6 @@ class RequestContextLogMiddleware(BaseHTTPMiddleware):
         Returns:
             Response
         """
-        await self.set_body(request, await request.body())
         request_body = await self.get_body(request)
 
         response = await call_next(request)
@@ -91,23 +90,8 @@ class RequestContextLogMiddleware(BaseHTTPMiddleware):
             media_type=response.media_type,  # type: ignore
         )
 
-    async def set_body(self, request: Request, body: bytes) -> None:
-        """Set body from RequestArgs"""
-
-        async def receive() -> Optional[Dict[str, Union[bytes, str]]]:
-            if self.elastic is not None:
-                await self.elastic.set_body(request=request, body=body)
-                return None
-            else:
-                return {"type": "http.request", "body": body}
-
-        request._receive = receive  # type: ignore
-
     async def get_body(self, request: Request) -> bytes:
         """Get body from request"""
-        if self.elastic is not None:
-            return await self.elastic.get_body(request=request)
 
         body = await request.body()
-        await self.set_body(request, body)
         return body

@@ -113,6 +113,6 @@ repos:
 
   - id: pip-audit
     name: Pip Audit validation
-    entry: bash -c "poetry export --without-hashes | pip-audit --no-deps -r /dev/stdin"
+    entry: bash -c "poetry export --without-hashes | poetry run pip-audit --no-deps -r /dev/stdin"
     language: system
     types: [python]
