@@ -19,7 +19,7 @@ jobs:
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v3
+      uses: actions/checkout@master
       with:
         fetch-depth: 0
 
@@ -30,6 +30,10 @@ jobs:
         curl -sSL https://install.python-poetry.org | python3 -
         echo "version=$(poetry version --short)" >> $GITHUB_OUTPUT
 
+    - name: Checkout latest release tag
+      id: tag_search
+      run: |
+        echo "latest_tag=$(git describe --tags `git rev-list --tags --max-count=1`)" >> $GITHUB_OUTPUT
 
     - name: Changelog
       uses: Bullrich/generate-release-changelog@master
@@ -41,7 +45,7 @@ jobs:
       id: github_release
       uses: mikepenz/release-changelog-builder-action@v3
       with:
-        fromTag: main
+        fromTag: ${{ steps.tag_search.outputs.latest_tag }}
         toTag: ${{ github.ref_name }}
         configurationJson: |
           {
