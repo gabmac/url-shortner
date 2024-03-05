@@ -61,6 +61,14 @@ jobs:
                 {
                     "title": "## 🧪 Tests",
                     "labels": ["test", "Test"]
+                },
+                {
+                    "title": "## 🛺 Pipeline",
+                    "labels": ["pipe", "ci", "cd"]
+                },
+                {
+                    "title": "## 📖 Docs",
+                    "labels": ["docs", "doc", "documentation"]
                 }
             ],
             "sort": "ASC",
