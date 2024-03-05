@@ -7,6 +7,10 @@ on:
 
 jobs:
 
+  labeler:
+    uses: ./.github/workflows/pull_request_labeler.yml
+
+
   sync-branch:
     uses: ./.github/workflows/merge_main.yml
 
